@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+   <children>
+      <VBox layoutX="171.0" layoutY="89.0" prefHeight="200.0" prefWidth="248.0" spacing="5.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="175.0" AnchorPane.topAnchor="75.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="52.0" prefWidth="250.0" text="AutoRent" textAlignment="CENTER">
+               <font>
+                  <Font size="28.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </Label>
+            <Label text="Inicia sesion en tu cuenta" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Label>
+            <TextField promptText="Usuario">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TextField>
+            <Label text="Contraseña" textAlignment="CENTER" />
+            <PasswordField promptText="Contraseña" />
+            <HBox alignment="CENTER_LEFT" prefHeight="98.0" prefWidth="248.0">
+               <children>
+                  <Button alignment="CENTER" mnemonicParsing="false" style="-fx-background-color: #ea4e4e;" text="Iniciar Sesion">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="70.0" right="60.0" top="10.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

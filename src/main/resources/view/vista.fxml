@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.MainController">
+    <!-- Top: Barra de menú -->
+    <top>
+        <MenuBar>
+            <Menu text="Archivo">
+                <MenuItem text="Nuevo"/>
+                <MenuItem text="Abrir"/>
+                <MenuItem text="Salir" onAction="#handleSalir"/>
+            </Menu>
+            <Menu text="Editar">
+                <MenuItem text="Copiar"/>
+                <MenuItem text="Pegar"/>
+            </Menu>
+            <Menu text="Ayuda">
+                <MenuItem text="Acerca de"/>
+            </Menu>
+        </MenuBar>
+    </top>
+
+    <!-- Center: Tabla de datos -->
+    <center>
+        <VBox spacing="10" alignment="CENTER">
+            <Label text="Tabla de Datos" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+            <TableView fx:id="tablaDatos">
+                <columns>
+                    <TableColumn text="ID" fx:id="columnaID"/>
+                    <TableColumn text="Nombre" fx:id="columnaNombre"/>
+                    <TableColumn text="Edad" fx:id="columnaEdad"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+    <!-- Bottom: Botones -->
+    <bottom>
+        <HBox spacing="10.0" alignment="CENTER">
+            <padding>
+                <Insets top="10" right="20" bottom="10" left="20"/>
+            </padding>
+            <Button text="Agregar" onAction="#handleAgregar"/>
+            <Button text="Editar" onAction="#handleEditar"/>
+            <Button text="Eliminar" onAction="#handleEliminar"/>
+        </HBox>
+    </bottom>
+
+    <!-- Right: Formulario -->
+    <right>
+        <VBox spacing="10.0" alignment="CENTER">
+            <padding>
+                <Insets top="10" right="20" bottom="10" left="20"/>
+            </padding>
+            <Label text="Formulario" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+            <GridPane hgap="10.0" vgap="10.0">
+                <Label text="ID:"/>
+                <TextField fx:id="txtID"/>
+                <Label text="Nombre:"/>
+                <TextField fx:id="txtNombre"/>
+                <Label text="Edad:"/>
+                <TextField fx:id="txtEdad"/>
+            </GridPane>
+            <Button text="Guardar" onAction="#handleGuardar"/>
+        </VBox>
+    </right>
+</BorderPane>
