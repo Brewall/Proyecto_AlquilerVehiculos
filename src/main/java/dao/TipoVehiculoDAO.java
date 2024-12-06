@@ -17,7 +17,7 @@ public class TipoVehiculoDAO {
         this.connection = DBConnection.getConnection();
     }
 
-    //crear tipo vehiculo
+    // Crear un nuevo tipo vehiculo
     public boolean createTipoVehiculo(TipoVehiculo tipoVehiculo){
         String query = "INSERT INTO TipoVehiculo (tipo_vehiculo) VALUES (?)";
 
@@ -32,7 +32,7 @@ public class TipoVehiculoDAO {
         }
     }
 
-    //Leer tipos vehiculo
+    // Obtener todos los tipos vehiculo
     public List<TipoVehiculo> getAllTipoVehiculo(){
         List<TipoVehiculo> tipoVehiculos = new ArrayList<>();
         String query = "";
@@ -53,7 +53,7 @@ public class TipoVehiculoDAO {
         return tipoVehiculos;
     }
 
-    //obtener un tipo de vehiculo por ID
+    // Obtener un tipo de vehiculo por ID
     public TipoVehiculo getTipoVehiculoById(int idTipoVehiculo){
         TipoVehiculo tipoVehiculo = null;
         String query = "SELECT * FROM TipoVehiculo WHERE id_tipoVehiculo = ?";
@@ -75,7 +75,7 @@ public class TipoVehiculoDAO {
     }
 
 
-    //Actualizar un tipo Vehiculo
+    // Actualizar un tipo Vehiculo
     public boolean updateTipoVehiculo(TipoVehiculo tipoVehiculo){
         String query ="";
         try {
@@ -90,7 +90,7 @@ public class TipoVehiculoDAO {
         }
     }
 
-    //Eliminar un tipoVehiculo
+    // Eliminar un tipoVehiculo
     public boolean deleteTipoVehiculo(int idTipoVehiculo){
         String query = "DELETE FROM TipoVehiculo WHERE id_tipoVehiculo = ?";
 

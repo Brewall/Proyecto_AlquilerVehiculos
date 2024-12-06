@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuReservasController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuReservasController">
    <children>
       <VBox alignment="CENTER" layoutX="233.0" layoutY="59.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <padding>
@@ -18,32 +24,32 @@
                </font>
             </Label>
             <Label text="Cliente" translateX="-250.0" />
-            <ComboBox opacity="0.5" prefHeight="25.0" prefWidth="529.0" promptText="Seleccione un Cliente" translateX="-10.0" />
+            <ComboBox fx:id="comboBoxCliente" onAction="#clickComboBoxCliente" opacity="0.5" prefHeight="25.0" prefWidth="529.0" promptText="Seleccione un Cliente" translateX="-10.0" />
             <Label text="Vehiculo" translateX="-245.0" translateY="15.0" />
-            <ComboBox opacity="0.5" prefHeight="25.0" prefWidth="545.0" promptText="Seleccione un Vehiculo" translateX="-10.0" translateY="15.0" />
+            <ComboBox fx:id="comboBoxVehiculo" onAction="#clickComboBoxVehiculo" opacity="0.5" prefHeight="25.0" prefWidth="545.0" promptText="Seleccione un Vehiculo" translateX="-10.0" translateY="15.0" />
             <Label text="Fecha y Hora de inicio" translateX="-210.0" translateY="20.0">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
             </Label>
-            <DatePicker promptText="Seleccione una fecha" translateX="-180.0" translateY="20.0" />
-            <TextField opacity="0.5" promptText="HH:MM" translateX="-25.0" translateY="-5.0">
+            <DatePicker fx:id="datePickerFechaInicio" onAction="#datePickerFechaInicio" promptText="Seleccione una fecha" translateX="-180.0" translateY="20.0" />
+            <TextField fx:id="textFieldHoraInicio" onAction="#textHoraInicio" opacity="0.5" promptText="HH:MM" translateX="-25.0" translateY="-5.0">
                <VBox.margin>
                   <Insets left="200.0" right="260.0" />
                </VBox.margin>
             </TextField>
             <Label text="Fecha y Hora de devolucion" translateX="-195.0" />
-            <DatePicker promptText="Seleccione una fecha" translateX="-180.0" />
-            <TextField opacity="0.5" promptText="HH:MM" translateX="-25.0" translateY="-25.0">
+            <DatePicker fx:id="datePickerFechaDevolucion" onAction="#clickDatePickerFechaDevolucion" promptText="Seleccione una fecha" translateX="-180.0" />
+            <TextField fx:id="textFieldHoraDevolucion" onAction="#textHoraDevolucion" opacity="0.5" promptText="HH:MM" translateX="-25.0" translateY="-25.0">
                <VBox.margin>
                   <Insets left="200.0" right="260.0" />
                </VBox.margin>
             </TextField>
             <Label prefHeight="17.0" prefWidth="111.0" text="Estado de la reserva" translateX="-210.0" translateY="-20.0" />
-            <ComboBox opacity="0.5" prefHeight="25.0" prefWidth="545.0" promptText="Seleccione el estado de la reserva" translateX="-10.0" translateY="-20.0" />
-            <Button mnemonicParsing="false" style="-fx-background-color: black;" text="Crear Reserva" textFill="WHITE" translateX="-225.0" />
-            <Button mnemonicParsing="false" text="Editar Reserva Existente" translateX="-105.0" translateY="-25.0" />
-            <Button mnemonicParsing="false" style="-fx-background-color: red;" text="Cancelar Reserva" textFill="WHITE" translateX="25.0" translateY="-50.0" />
+            <ComboBox fx:id="comboBoxReserva" onAction="#clickComboBoxReserva" opacity="0.5" prefHeight="25.0" prefWidth="545.0" promptText="Seleccione el estado de la reserva" translateX="-10.0" translateY="-20.0" />
+            <Button fx:id="buttomCrearReserva" mnemonicParsing="false" onAction="#clickButtomCrearReserva" style="-fx-background-color: black;" text="Crear Reserva" textFill="WHITE" translateX="-225.0" />
+            <Button fx:id="buttomEditarReserva" mnemonicParsing="false" onAction="#clickEditarReservaExistente" text="Editar Reserva Existente" translateX="-105.0" translateY="-25.0" />
+            <Button fx:id="buttomCancelarReserva" mnemonicParsing="false" onAction="#clickButtomCancelarReserva" style="-fx-background-color: red;" text="Cancelar Reserva" textFill="WHITE" translateX="25.0" translateY="-50.0" />
          </children>
       </VBox>
       <Accordion />

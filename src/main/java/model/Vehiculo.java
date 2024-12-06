@@ -3,6 +3,7 @@ package model;
 public class Vehiculo {
     private int idVehiculo;
     private String marca;
+    private String modelo;
     private String anioVehiculo;
     private String placa;
     private double precioHora;
@@ -27,6 +28,10 @@ public class Vehiculo {
     public void setMarca(String marca) {
         this.marca = marca;
     }
+
+    public String getModelo() { return modelo; }
+
+    public void setModelo(String modelo) { this.modelo = modelo; }
 
     public String getAnioVehiculo() {
         return anioVehiculo;

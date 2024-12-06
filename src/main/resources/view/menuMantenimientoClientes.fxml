@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuMantenimientoClientesController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuMantenimientoClientesController">
    <children>
       <VBox layoutX="233.0" layoutY="68.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>
@@ -15,34 +22,34 @@
                </font>
             </Label>
             <Label text="Nombres" />
-            <TextField />
+            <TextField fx:id="textFieldNombreCliente" onAction="#textNombresCliente" />
             <Label text="Apellido Paterno" />
-            <TextField />
+            <TextField fx:id="textFieldAppellidoCliente" onAction="#textApellidoPaternoCliente" />
             <Label text="Apellido Materno" />
-            <TextField />
-            <Label text="Apellido Materno" />
-            <TextField />
+            <TextField fx:id="textFieldAppellido2Cliente" onAction="#textFieldAppellidoMaternoCliente" />
+            <Label text="DNI" />
+            <TextField fx:id="textFieldDniCliente" onAction="#textDniCliente" />
             <Label text="Direccion" />
-            <TextField />
+            <TextField fx:id="textFieldDireccionCliente" onAction="#textDireccionCliente" />
             <Label text="Telefono" />
-            <TextField />
+            <TextField fx:id="textFieldTelefonoCliente" onAction="#textTelefonoCliente" />
             <Label text="Correo Electronico" />
-            <TextField />
+            <TextField fx:id="textFieldCorreoCliente" onAction="#textCorreoCliente" />
             <Label text="Genero" />
-            <ComboBox prefHeight="25.0" prefWidth="159.0" promptText="Seleccione el Genero" />
+            <ComboBox fx:id="comboBoxGeneroCliente" onAction="#clickComboBocGeneroCliente" prefHeight="25.0" prefWidth="159.0" promptText="Seleccione el Genero" />
             <Label text="Fecha de Nacimiento" translateX="185.0" translateY="-42.0" />
-            <TextField opacity="0.5" prefHeight="25.0" prefWidth="441.0" text="DD/MM/AAAA" translateX="160.0" translateY="-42.0">
+            <TextField fx:id="textFieldFechaNacimientoCliente" onAction="#textFechaNacimientoCliente" opacity="0.5" prefHeight="25.0" prefWidth="441.0" text="DD/MM/AAAA" translateX="160.0" translateY="-42.0">
                <VBox.margin>
                   <Insets left="22.0" right="350.0" />
                </VBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" style="-fx-background-color: black;" text="Agregar Cliente" textFill="WHITE" translateY="-30.0" />
+            <Button fx:id="buttomAgregarCliente" mnemonicParsing="false" onAction="#clickButtomAgregarCliente" style="-fx-background-color: black;" text="Agregar Cliente" textFill="WHITE" translateY="-30.0" />
             <Label text="Lista de Clientes" translateY="-25.0">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <TableView prefHeight="200.0" prefWidth="200.0" translateY="-25.0">
+            <TableView fx:id="tableViewClientes" prefHeight="200.0" prefWidth="200.0" translateY="-25.0">
               <columns>
                 <TableColumn prefWidth="60.0" text="Nombres" />
                 <TableColumn prefWidth="76.0" text="1er Apellido" />

@@ -17,17 +17,18 @@ public class VehiculoDAO {
         this.connection = DBConnection.getConnection(); //obtiene la conexion
     }
 
-    //crear un nuevo vehiculo
+    // Crear un nuevo vehiculo
     public boolean createVehiculo(Vehiculo vehiculo){
-        String query = "INSERT INTO Vehiculo (marca, anio_vehiculo, placa, precio_hora, disponible,tipo_vehiculo) VALUES (?,?,?,?,?,?)";
+        String query = "INSERT INTO Vehiculo (marca,modelo, anio_vehiculo, placa, precio_hora, disponible,tipo_vehiculo) VALUES (?,?,?,?,?,?,?)";
         try {
             ps = connection.prepareStatement(query);
             ps.setString(1,vehiculo.getMarca());
-            ps.setString(2,vehiculo.getAnioVehiculo());
-            ps.setString(3,vehiculo.getPlaca());
-            ps.setDouble(4,vehiculo.getPrecioHora());
-            ps.setBoolean(5,vehiculo.isDisponible());
-            ps.setInt(6,vehiculo.getIdTipoVehiculo());
+            ps.setString(2,vehiculo.getModelo());
+            ps.setString(3,vehiculo.getAnioVehiculo());
+            ps.setString(4,vehiculo.getPlaca());
+            ps.setDouble(5,vehiculo.getPrecioHora());
+            ps.setBoolean(6,vehiculo.isDisponible());
+            ps.setInt(7,vehiculo.getIdTipoVehiculo());
 
             return ps.execute();
         } catch (SQLException e){
@@ -36,6 +37,7 @@ public class VehiculoDAO {
         }
     }
 
+    // Obtener todos los vehiculos
     public List<Vehiculo> getAllVehiculos(){
         List<Vehiculo> vehiculos = new ArrayList<>();
         String query = "SELECT * FROM Vehiculo";
@@ -45,6 +47,7 @@ public class VehiculoDAO {
                 Vehiculo vehiculo = new Vehiculo();
                 vehiculo.setIdVehiculo(rs.getInt("id_vehiculo"));
                 vehiculo.setMarca(rs.getString("marca"));
+                vehiculo.setModelo(rs.getString("modelo"));
                 vehiculo.setAnioVehiculo(rs.getString("anio_vehiculo"));
                 vehiculo.setPlaca(rs.getString("placa"));
                 vehiculo.setPrecioHora(rs.getDouble("precio_hora"));
@@ -57,6 +60,7 @@ public class VehiculoDAO {
         return vehiculos;
     }
 
+    // Obtener un vehiculo por su ID
     public Vehiculo getVehiculosById(int idVehiculo) {
         Vehiculo vehiculo = null;
         String query = "SELECT * FROM Vehiculo WHERE id_vehiculo = ?";
@@ -70,6 +74,7 @@ public class VehiculoDAO {
                 vehiculo = new Vehiculo();
                 vehiculo.setIdVehiculo(rs.getInt("id_vehiculo"));
                 vehiculo.setMarca(rs.getString("marca"));
+                vehiculo.setModelo(rs.getString("modelo"));
                 vehiculo.setAnioVehiculo(rs.getString("anio_vehiculo"));
                 vehiculo.setPlaca(rs.getString("placa"));
                 vehiculo.setPrecioHora(rs.getDouble("precio_hora"));
@@ -82,18 +87,19 @@ public class VehiculoDAO {
         return vehiculo;
     }
 
-    //actualizar vehiculo
+    // Actualizar un vehiculo
     public boolean updateVehiculo(Vehiculo vehiculo){
-        String query = "UPDATE Vehiculo SET marca = ?, anio_vehiculo = ?, placa = ?, precio_hora = ?, disponible = ?, id_tipoVehiculo = ?";
+        String query = "UPDATE Vehiculo SET marca = ?, modelo = ?, anio_vehiculo = ?, placa = ?, precio_hora = ?, disponible = ?, id_tipoVehiculo = ?";
 
         try {
             ps = connection.prepareStatement(query);
             ps.setString(1, vehiculo.getMarca());
-            ps.setString(2, vehiculo.getAnioVehiculo());
-            ps.setString(3, vehiculo.getPlaca());
-            ps.setDouble(4, vehiculo.getPrecioHora());
-            ps.setBoolean(5, vehiculo.isDisponible());
-            ps.setInt(6, vehiculo.getIdTipoVehiculo());
+            ps.setString(2,vehiculo.getModelo());
+            ps.setString(3, vehiculo.getAnioVehiculo());
+            ps.setString(4, vehiculo.getPlaca());
+            ps.setDouble(5, vehiculo.getPrecioHora());
+            ps.setBoolean(6, vehiculo.isDisponible());
+            ps.setInt(7, vehiculo.getIdTipoVehiculo());
 
             return ps.execute();
         }catch (SQLException e){
@@ -102,7 +108,7 @@ public class VehiculoDAO {
         }
     }
 
-    //eliminar vehiculo
+    // Eliminar un vehiculo
     public boolean deleteVehiculo(int idVehiculo){
         String query = "DELETE FROM Vehiculo WHERE id_vehiculo = ?";
 

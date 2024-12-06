@@ -37,7 +37,7 @@ public class PersonaDAO {
         }
     }
 
-    // Leer todas las personas
+    // Obtener todas las personas
     public List<Persona> getAllPersonas() {
         List<Persona> personas = new ArrayList<>();
         String query = "SELECT * FROM Persona";
@@ -66,7 +66,7 @@ public class PersonaDAO {
         return personas;
     }
 
-    // Leer una persona por ID
+    // Obtener una persona por ID
     public Persona getPersonaById(int idPersona) {
         Persona persona = null;
         String query = "SELECT * FROM Persona WHERE id_persona = ?";

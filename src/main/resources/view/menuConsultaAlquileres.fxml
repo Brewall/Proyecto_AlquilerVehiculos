@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuConsultaAlquileresController">
    <children>
       <VBox layoutX="200.0" layoutY="75.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
@@ -25,7 +24,7 @@
                   <Insets left="5.0" />
                </VBox.margin>
             </Label>
-            <ComboBox prefHeight="25.0" prefWidth="218.0" promptText="Seleccione al Cliente">
+            <ComboBox fx:id="comboBoxCliente" onAction="#clickComboBoxCliente" prefHeight="25.0" prefWidth="218.0" promptText="Seleccione al Cliente">
                <VBox.margin>
                   <Insets left="5.0" />
                </VBox.margin>
@@ -35,12 +34,12 @@
                   <Insets left="5.0" />
                </VBox.margin>
             </Label>
-            <ComboBox prefHeight="25.0" prefWidth="217.0" promptText="Seleccione el Vehiculo">
+            <ComboBox fx:id="comboBoxVehiculo" onAction="#clickComboBoxVehiculo" prefHeight="25.0" prefWidth="217.0" promptText="Seleccione el Vehiculo">
                <VBox.margin>
                   <Insets left="5.0" />
                </VBox.margin>
             </ComboBox>
-            <Button mnemonicParsing="false" style="-fx-background-color: black;" text="Buscar" textFill="WHITE">
+            <Button fx:id="buttomBuscarAlquiler" mnemonicParsing="false" onAction="#clickButtomBuscarAlquiler" style="-fx-background-color: black;" text="Buscar" textFill="WHITE">
                <VBox.margin>
                   <Insets bottom="10.0" left="5.0" top="10.0" />
                </VBox.margin>

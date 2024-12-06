@@ -17,7 +17,7 @@ public class EmpresaDAO {
         this.connection = DBConnection.getConnection();
     }
 
-    //CREATE EMP
+    // Crea una nueva empresa
     public boolean createEmpresa(Empresa empresa){
         String query = "INSERT INTO Empresa(razon_social, ruc, direccion) VALUES (?,?,?)";
         try {
@@ -33,7 +33,7 @@ public class EmpresaDAO {
         }
     }
 
-    //leer - imprimir
+    // Obtener todos las empresas
     public List<Empresa> getAllEmpresas(){
         List<Empresa> empresas = new ArrayList<>();
         String query ="SELECT * FROM Empresa";
@@ -52,7 +52,7 @@ public class EmpresaDAO {
         return empresas;
     }
 
-    //Buscar
+    // Obtiene una empresa por su ID
     public Empresa getEmpresaById(int idEmpresa){
         Empresa empresa = null;
         String query = "SELECT * FROM Empresa WHERE id_empresa = ?";
@@ -75,7 +75,7 @@ public class EmpresaDAO {
         return empresa;
     }
 
-    //actualizar
+    // Actualizar una empresa
     public boolean updateEmpresa(Empresa empresa){
         String query = "UPDATE Empresa SET razon_social = ?, ruc = ?, direccion = ?";
 
@@ -92,7 +92,7 @@ public class EmpresaDAO {
         }
     }
 
-    //eliminar
+    // Eliminar una empresa
     public boolean deleteEmpresa(int idEmpresa){
         String query = "DELETE FROM Empresa WHERE id_empresa = ?";
 
