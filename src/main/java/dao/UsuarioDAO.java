@@ -103,4 +103,27 @@ public class UsuarioDAO {
             return false;
         }
     }
+
+    // Validar usuario y contraseña
+    public Usuario validarUsuario(String nombreUsuario, String contrasenaUsuario) {
+        Usuario usuario = null;
+        String query = "SELECT * FROM Usuario WHERE nombre_usuario = ? AND contraseña_usuario = ?";
+        try {
+            ps = connection.prepareStatement(query);
+            ps.setString(1, nombreUsuario);
+            ps.setString(2, contrasenaUsuario);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                usuario = new Usuario();
+                usuario.setIdUsuario(rs.getInt("id_usuario"));
+                usuario.setNombreUsuario(rs.getString("nombre_usuario"));
+                usuario.setContrasenaUsuario(rs.getString("contraseña_usuario"));
+                usuario.setFechaCreacion(rs.getString("fecha_creacion"));
+                usuario.setIdEmpleado(rs.getInt("id_empleado"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return usuario; // Devuelve null si no se encontró usuario
+    }
 }

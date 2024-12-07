@@ -53,5 +53,10 @@
          </children>
       </VBox>
       <Accordion />
+      <Button fx:id="buttomRegresarMenuPrincipal" alignment="TOP_LEFT" layoutX="20.0" layoutY="11.0" mnemonicParsing="false" onAction="#clickButtomRegresarMenuPrincipal" prefHeight="18.0" prefWidth="114.0" style="-fx-background-color: yellow;" text="Regresar al menu principal">
+         <font>
+            <Font name="System Bold" size="8.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

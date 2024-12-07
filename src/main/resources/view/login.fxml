@@ -30,13 +30,13 @@
                   <Insets />
                </VBox.margin>
             </Label>
-            <TextField fx:id="textFieldUsuario" onAction="#textUsuario" promptText="Usuario">
+            <TextField fx:id="textFieldUsuario"  promptText="Usuario">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
             </TextField>
             <Label text="Contraseña" textAlignment="CENTER" />
-            <PasswordField fx:id="textFieldPasswordUsuario" onAction="#textPasswordUsuario" promptText="Contraseña" />
+            <PasswordField fx:id="textFieldPasswordUsuario" promptText="Contraseña" />
             <HBox alignment="CENTER_LEFT" prefHeight="98.0" prefWidth="248.0">
                <children>
                   <Button fx:id="buttomAccederUsuario" alignment="CENTER" mnemonicParsing="false" onAction="#clickButtomAccederUsuario" style="-fx-background-color: #ea4e4e;" text="Iniciar Sesion" textFill="WHITE">

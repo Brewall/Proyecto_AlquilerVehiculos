@@ -94,7 +94,7 @@
                               <Font size="10.0" />
                            </font>
                         </Label>
-                        <Button fx:id="buttomAccederDevoluciones" alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#clickAccederDevoluciones" style="-fx-background-color: black;" text="Acceder" textFill="WHITE">
+                        <Button fx:id="buttomAccederDevoluciones" alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#clickButtomAccederDevoluciones" style="-fx-background-color: black;" text="Acceder" textFill="WHITE">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
@@ -125,7 +125,7 @@
                               <Font name="System Italic" size="10.0" />
                            </font>
                         </Label>
-                        <Button fx:id="buttomAccederMantenimientoVehiculo" alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#clickButtomAccederMantenimientoVehiculos" style="-fx-background-color: black;" text="Acceder" textFill="WHITE">
+                        <Button fx:id="buttomAccederMantenimientoVehiculo" alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#clickButtomAccederMantenimientoVehiculo" style="-fx-background-color: black;" text="Acceder" textFill="WHITE">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
