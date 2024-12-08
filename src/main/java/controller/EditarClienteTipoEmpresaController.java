@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 
 public class EditarClienteTipoEmpresaController {
@@ -10,5 +11,17 @@ public class EditarClienteTipoEmpresaController {
         alerta.setTitle(titulo);
         alerta.setContentText(contenido);
         alerta.showAndWait();
+    }
+
+    public void clickComboBoxClienteEmpresa(ActionEvent actionEvent) {
+    }
+
+    public void clickButtomGuardarCambiosClienteTipoEmpresa(ActionEvent actionEvent) {
+    }
+
+    public void clickButtomEliminarClienteTipoEmpresa(ActionEvent actionEvent) {
+    }
+
+    public void clickButtomRegresarMenuAnterior(ActionEvent actionEvent) {
     }
 }

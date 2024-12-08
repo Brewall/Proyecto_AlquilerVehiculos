@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuMantenimientoClientesController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuMantenimientoClientesController">
    <children>
       <VBox layoutX="233.0" layoutY="68.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>
@@ -37,12 +43,13 @@
                </VBox.margin>
             </TextField>
             <Button fx:id="buttomAgregarCliente" mnemonicParsing="false" onAction="#clickButtomAgregarCliente" style="-fx-background-color: black;" text="Agregar Cliente" textFill="WHITE" translateY="-30.0" />
-            <Label text="Lista de Clientes" translateY="-25.0">
+            <Button fx:id="buttomEditarClienteTipoPersona" mnemonicParsing="false" onAction="#clickButtomEditarClienteTipoPersona" text="Editar Cliente Existente" translateX="110.0" translateY="-55.0" />
+            <Label text="Lista de Clientes" translateY="-50.0">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <TableView fx:id="tableViewClientes" prefHeight="200.0" prefWidth="200.0" translateY="-25.0">
+            <TableView fx:id="tableViewClientes" prefHeight="100.0" prefWidth="560.0" translateY="-50.0">
               <columns>
                 <TableColumn prefWidth="60.0" text="Nombres" />
                 <TableColumn prefWidth="76.0" text="1er Apellido" />
@@ -61,6 +68,5 @@
             <Font name="System Bold" size="8.0" />
          </font>
       </Button>
-      <ScrollBar layoutX="586.0" layoutY="29.0" orientation="VERTICAL" prefHeight="517.0" prefWidth="14.0" />
    </children>
 </AnchorPane>

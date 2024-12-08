@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuMantenimientoClientesEmpresa">
    <children>
       <VBox layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="14.0">
@@ -36,12 +35,13 @@
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <Label text="Lista de Clientes de Tipo Empresa">
+            <Button fx:id="buttomEditarClienteTipoEmpresa" mnemonicParsing="false" onAction="#clickButtomEditarClienteTipoEmpresa" text="Editar Cliente Existente" translateX="110.0" translateY="-35.0" />
+            <Label text="Lista de Clientes de Tipo Empresa" translateY="-25.0">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TableView fx:id="tablaClientesTipoEmpresa" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="tablaClientesTipoEmpresa" prefHeight="118.0" prefWidth="560.0" translateY="-25.0">
               <columns>
                 <TableColumn prefWidth="190.0" text="Razon Social" />
                 <TableColumn prefWidth="112.0" text="RUC" />

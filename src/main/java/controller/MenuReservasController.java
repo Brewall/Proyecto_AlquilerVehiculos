@@ -30,17 +30,28 @@ public class MenuReservasController {
     public void textHoraDevolucion(ActionEvent actionEvent) {
     }
 
-    public void clickComboBoxReserva(ActionEvent actionEvent) {
-    }
-
     public void clickButtomCrearReserva(ActionEvent actionEvent) {
     }
 
     public void clickEditarReservaExistente(ActionEvent actionEvent) {
+        try {
+            // Cargamos la vista del menú principal
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/editarReservaExistente.fxml"));
+            Parent root = loader.load();
+
+            // Creamos la nueva escena
+            Scene scene = new Scene(root);
+
+            // Obtenemos el Stage actual y lo cambiamos
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo cargar el menú principal", Alert.AlertType.ERROR);
+        }
     }
 
-    public void clickButtomCancelarReserva(ActionEvent actionEvent) {
-    }
 
     @FXML
     public void clickButtomRegresarMenuPrincipal(ActionEvent actionEvent) {
@@ -66,5 +77,8 @@ public class MenuReservasController {
         alerta.setTitle(titulo);
         alerta.setContentText(contenido);
         alerta.showAndWait();
+    }
+
+    public void clickComboBoxEmpleadoReserva(ActionEvent actionEvent) {
     }
 }

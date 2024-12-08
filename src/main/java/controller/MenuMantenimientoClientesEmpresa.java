@@ -40,5 +40,25 @@ public class MenuMantenimientoClientesEmpresa {
     }
 
     public void clickButtomAgregarClienteTipoEmpresa(ActionEvent actionEvent) {
+
+    }
+
+    public void clickButtomEditarClienteTipoEmpresa(ActionEvent actionEvent) {
+        try {
+            // Cargamos la vista del menú principal
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/editarClienteTipoEmpresa.fxml"));
+            Parent root = loader.load();
+
+            // Creamos la nueva escena
+            Scene scene = new Scene(root);
+
+            // Obtenemos el Stage actual y lo cambiamos
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo cargar el menú para editar Cliente", Alert.AlertType.ERROR);
+        }
     }
 }
