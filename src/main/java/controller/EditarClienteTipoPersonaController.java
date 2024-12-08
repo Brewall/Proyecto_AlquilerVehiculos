@@ -1,7 +1,12 @@
 package controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 
 public class EditarClienteTipoPersonaController {
 
@@ -26,5 +31,21 @@ public class EditarClienteTipoPersonaController {
     }
 
     public void clickButtomRegresarMenuAnterior(ActionEvent actionEvent) {
+        try {
+            // Cargamos la vista del menú principal
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/menuMantenimientoClientes.fxml"));
+            Parent root = loader.load();
+
+            // Creamos la nueva escena
+            Scene scene = new Scene(root);
+
+            // Obtenemos el Stage actual y lo cambiamos
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo cargar el menú principal", Alert.AlertType.ERROR);
+        }
     }
 }
