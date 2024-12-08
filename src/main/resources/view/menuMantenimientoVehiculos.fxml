@@ -22,37 +22,37 @@
                </font>
             </Label>
             <Label text="Marca Vehiculo" translateX="-230.0" />
-            <TextField fx:id="textFieldMarcaVehiculo" onAction="#textMarcaVehiculo" prefHeight="54.0" prefWidth="560.0">
+            <TextField fx:id="textFieldMarcaVehiculo" prefHeight="54.0" prefWidth="560.0">
                <padding>
                   <Insets left="5.0" right="5.0" />
                </padding>
             </TextField>
             <Label text="Modelo Vehiculo" translateX="-227.0" />
-            <TextField fx:id="textFieldModeloVehiculo" onAction="#textModeloVehiculo">
+            <TextField fx:id="textFieldModeloVehiculo">
                <padding>
                   <Insets left="5.0" right="5.0" />
                </padding>
             </TextField>
             <Label text="Año del Vehiculo" translateX="-227.0" />
-            <TextField fx:id="textFieldAnioVehiculo" onAction="#textAnioVehiculo">
+            <TextField fx:id="textFieldAnioVehiculo">
                <padding>
                   <Insets left="5.0" right="5.0" />
                </padding>
             </TextField>
             <Label text="Placa del Vehiculo" translateX="-225.0" />
-            <TextField fx:id="textFieldPlacaVehiculo" onAction="#textPlacaVehiculo">
+            <TextField fx:id="textFieldPlacaVehiculo">
                <padding>
                   <Insets left="5.0" right="5.0" />
                </padding>
             </TextField>
             <Label text="Precio del Vehiculo" translateX="-222.0" />
-            <TextField fx:id="textFieldPrecioVehiculo" onAction="#textPrecioVehiculo" prefHeight="26.0" prefWidth="560.0">
+            <TextField fx:id="textFieldPrecioVehiculo" prefHeight="26.0" prefWidth="560.0">
                <padding>
                   <Insets left="5.0" right="5.0" />
                </padding>
             </TextField>
             <Label text="Categoria del Vehiculo" translateX="-215.0" />
-            <ComboBox fx:id="comboBoxCategoriaVehiculo" onAction="#clickComboBoxCategoriaVehiculo" prefHeight="25.0" prefWidth="551.0" />
+            <ComboBox fx:id="comboBoxCategoriaVehiculo" onAction="#clickComboBoxCategoriaVehiculo" prefHeight="0.0" prefWidth="551.0" />
             <Button fx:id="buttomAgregarVehiculo" mnemonicParsing="false" onAction="#clickButtomAgregarVehiculo" style="-fx-background-color: black;" text="Agregar Vehiculo" textFill="WHITE" translateX="-220.0" translateY="5.0">
                <VBox.margin>
                   <Insets bottom="5.0" top="5.0" />
@@ -63,14 +63,14 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TableView fx:id="ListaVehiculo" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="listaVehiculo" prefHeight="200.0" prefWidth="200.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="Marca " />
-                  <TableColumn prefWidth="75.0" text="Modelo" />
-                <TableColumn prefWidth="75.0" text="Año " />
-                  <TableColumn prefWidth="75.0" text="Placa" />
-                  <TableColumn prefWidth="75.0" text="Precio" />
-                  <TableColumn prefWidth="101.0" text="Disponibilidad" />
+                <TableColumn fx:id="columnaMarca" prefWidth="75.0" text="Marca " />
+                  <TableColumn fx:id="columnaModelo" prefWidth="75.0" text="Modelo" />
+                <TableColumn fx:id="columnaAnio" prefWidth="75.0" text="Año " />
+                  <TableColumn fx:id="columnaPlaca" prefWidth="75.0" text="Placa" />
+                  <TableColumn fx:id="columnaPrecio" prefWidth="75.0" text="Precio" />
+                  <TableColumn fx:id="columnaDisponibilidad" prefWidth="101.0" text="Disponibilidad" />
                   <TableColumn prefWidth="77.0" text="Categoria" />
               </columns>
             </TableView>

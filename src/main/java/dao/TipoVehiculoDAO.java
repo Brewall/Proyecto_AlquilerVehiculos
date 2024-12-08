@@ -35,7 +35,7 @@ public class TipoVehiculoDAO {
     // Obtener todos los tipos vehiculo
     public List<TipoVehiculo> getAllTipoVehiculo(){
         List<TipoVehiculo> tipoVehiculos = new ArrayList<>();
-        String query = "";
+        String query = "SELECT * FROM TipoVehiculo";
 
         try {
             ps = connection.prepareStatement(query);
@@ -104,4 +104,6 @@ public class TipoVehiculoDAO {
             return false;
         }
     }
+
+
 }

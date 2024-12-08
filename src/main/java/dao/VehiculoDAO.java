@@ -19,18 +19,22 @@ public class VehiculoDAO {
 
     // Crear un nuevo vehiculo
     public boolean createVehiculo(Vehiculo vehiculo){
-        String query = "INSERT INTO Vehiculo (marca,modelo, anio_vehiculo, placa, precio_hora, disponible,tipo_vehiculo) VALUES (?,?,?,?,?,?,?)";
+     /*   System.out.println("");
+        System.out.println("entra al create");
+        System.out.println(vehiculo.toString());*/
+        String query = "INSERT INTO Vehiculo (marca, modelo, anio_vehiculo, placa, precio_dia, disponible, id_tipoVehiculo) VALUES (?,?,?,?,?,?,?)";
         try {
             ps = connection.prepareStatement(query);
             ps.setString(1,vehiculo.getMarca());
             ps.setString(2,vehiculo.getModelo());
             ps.setString(3,vehiculo.getAnioVehiculo());
             ps.setString(4,vehiculo.getPlaca());
-            ps.setDouble(5,vehiculo.getPrecioHora());
+            ps.setDouble(5,vehiculo.getPrecioDia());
             ps.setBoolean(6,vehiculo.isDisponible());
             ps.setInt(7,vehiculo.getIdTipoVehiculo());
 
-            return ps.execute();
+            //return ps.execute();
+            return ps.executeUpdate()>0;
         } catch (SQLException e){
             e.printStackTrace();
             return false;
@@ -42,6 +46,7 @@ public class VehiculoDAO {
         List<Vehiculo> vehiculos = new ArrayList<>();
         String query = "SELECT * FROM Vehiculo";
         try {
+            ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery(query);
             while (rs.next()){
                 Vehiculo vehiculo = new Vehiculo();
@@ -50,9 +55,12 @@ public class VehiculoDAO {
                 vehiculo.setModelo(rs.getString("modelo"));
                 vehiculo.setAnioVehiculo(rs.getString("anio_vehiculo"));
                 vehiculo.setPlaca(rs.getString("placa"));
-                vehiculo.setPrecioHora(rs.getDouble("precio_hora"));
+                vehiculo.setPrecioDia(rs.getDouble("precio_dia"));
                 vehiculo.setDisponible(rs.getBoolean("disponible"));
                 vehiculo.setIdTipoVehiculo(rs.getInt("id_tipoVehiculo"));
+                // Agregar el vehiculo a la lista
+                vehiculos.add(vehiculo);
+                //System.out.println("marca" + rs.getString("marca"));
             }
         } catch (SQLException e){
             e.printStackTrace();
@@ -77,7 +85,7 @@ public class VehiculoDAO {
                 vehiculo.setModelo(rs.getString("modelo"));
                 vehiculo.setAnioVehiculo(rs.getString("anio_vehiculo"));
                 vehiculo.setPlaca(rs.getString("placa"));
-                vehiculo.setPrecioHora(rs.getDouble("precio_hora"));
+                vehiculo.setPrecioDia(rs.getDouble("precio_dia"));
                 vehiculo.setDisponible(rs.getBoolean("disponible"));
                 vehiculo.setIdTipoVehiculo(rs.getInt("id_tipoVehiculo"));
             }
@@ -97,7 +105,7 @@ public class VehiculoDAO {
             ps.setString(2,vehiculo.getModelo());
             ps.setString(3, vehiculo.getAnioVehiculo());
             ps.setString(4, vehiculo.getPlaca());
-            ps.setDouble(5, vehiculo.getPrecioHora());
+            ps.setDouble(5, vehiculo.getPrecioDia());
             ps.setBoolean(6, vehiculo.isDisponible());
             ps.setInt(7, vehiculo.getIdTipoVehiculo());
 

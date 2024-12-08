@@ -7,6 +7,11 @@ public class TipoVehiculo {
     public TipoVehiculo() {
     }
 
+    // Constructor
+    public TipoVehiculo(int idTipoVehiculo, String tipoVehiculo) {
+        this.idTipoVehiculo = idTipoVehiculo;
+        this.tipoVehiculo = tipoVehiculo;
+    }
 
     public int getIdTipoVehiculo() {
         return idTipoVehiculo;
@@ -23,4 +28,11 @@ public class TipoVehiculo {
     public void setTipoVehiculo(String tipoVehiculo) {
         this.tipoVehiculo = tipoVehiculo;
     }
+
+    // Método toString para mostrar en el ComboBox
+    @Override
+    public String toString() {
+        return tipoVehiculo; // Se mostrará el nombre del tipo en el ComboBox
+    }
+
 }

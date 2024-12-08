@@ -8,8 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import javafx.scene.layout.AnchorPane;
-import java.io.IOException;
 import javafx.event.ActionEvent;
 
 public class MenuPrincipalController {
@@ -89,7 +87,7 @@ public class MenuPrincipalController {
     public void clickButtomAccederMantenimientoClientes(ActionEvent actionEvent) {
         try {
             // Cargamos la vista de Mantenimiento de Clientes
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/menuMantenimientoClientes.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/menuTipoCliente.fxml"));
             Parent root = loader.load();
 
             // Creamos la nueva escena

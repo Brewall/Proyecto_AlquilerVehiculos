@@ -6,7 +6,7 @@ public class Vehiculo {
     private String modelo;
     private String anioVehiculo;
     private String placa;
-    private double precioHora;
+    private double precioDia;
     private boolean disponible;
     private int idTipoVehiculo;
 
@@ -49,12 +49,12 @@ public class Vehiculo {
         this.placa = placa;
     }
 
-    public double getPrecioHora() {
-        return precioHora;
+    public double getPrecioDia() {
+        return precioDia;
     }
 
-    public void setPrecioHora(double precioHora) {
-        this.precioHora = precioHora;
+    public void setPrecioDia(double precioDia) {
+        this.precioDia = precioDia;
     }
 
     public boolean isDisponible() {
@@ -71,5 +71,19 @@ public class Vehiculo {
 
     public void setIdTipoVehiculo(int idTipoVehiculo) {
         this.idTipoVehiculo = idTipoVehiculo;
+    }
+
+    @Override
+    public String toString() {
+        return "Vehiculo{" +
+                "idVehiculo=" + idVehiculo +
+                ", marca='" + marca + '\'' +
+                ", modelo='" + modelo + '\'' +
+                ", anioVehiculo='" + anioVehiculo + '\'' +
+                ", placa='" + placa + '\'' +
+                ", precioDia=" + precioDia +
+                ", disponible=" + disponible +
+                ", idTipoVehiculo=" + idTipoVehiculo +
+                '}';
     }
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuMantenimientoClientesEmpresa">
+   <children>
+      <VBox layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="14.0">
+         <children>
+            <Button fx:id="buttomRegresarMenuPrincipal" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#clickButtomRegresarMenuPrincipal" prefHeight="18.0" prefWidth="114.0" style="-fx-background-color: yellow;" text="Regresar al menu principal">
+               <font>
+                  <Font name="System Bold" size="8.0" />
+               </font>
+            </Button>
+            <Label text="Mantenimiento de Clientes de Tipo Empresa">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label text="Razon Social " />
+            <TextField />
+            <Label text="RUC" />
+            <TextField />
+            <Label text="Direccion" />
+            <TextField />
+            <Button fx:id="buttomAgregarClienteTipoEmpresa" mnemonicParsing="false" onAction="#clickButtomAgregarClienteTipoEmpresa" style="-fx-background-color: black;" text="Agregar Cliente" textFill="WHITE">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Label text="Lista de Clientes de Tipo Empresa">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tablaClientesTipoEmpresa" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn prefWidth="190.0" text="Razon Social" />
+                <TableColumn prefWidth="112.0" text="RUC" />
+                  <TableColumn prefWidth="155.0" text="Direccion" />
+                  <TableColumn minWidth="0.0" prefWidth="102.0" text="Acciones" />
+              </columns>
+            </TableView>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
