@@ -5,7 +5,6 @@ public class Devolucion {
     private String fechaDevolucion;
     private String observaciones;
     private double costosDano;
-    private double totalAdicional;
     private int idAlquiler;
 
     public Devolucion() {
@@ -51,12 +50,5 @@ public class Devolucion {
         this.observaciones = observaciones;
     }
 
-    public double getTotalAdicional() {
-        return totalAdicional;
-    }
-
-    public void setTotalAdicional(double totalAdicional) {
-        this.totalAdicional = totalAdicional;
-    }
 
 }

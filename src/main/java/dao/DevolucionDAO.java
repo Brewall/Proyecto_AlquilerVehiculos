@@ -11,7 +11,7 @@ public class DevolucionDAO {
 
     // Crear una nueva devolución
     public boolean createDevolucion(Devolucion devolucion) {
-        String query = "INSERT INTO Devolucion (fecha_devolucion, observaciones, costos_daño, total_adicional, id_alquiler) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Devolucion (fecha_devolucion, observaciones, costos_daño, id_alquiler) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -19,8 +19,7 @@ public class DevolucionDAO {
             ps.setString(1, devolucion.getFechaDevolucion());
             ps.setString(2, devolucion.getObservaciones());
             ps.setDouble(3, devolucion.getCostosDano());
-            ps.setDouble(4, devolucion.getTotalAdicional());
-            ps.setInt(5, devolucion.getIdAlquiler());
+            ps.setInt(4, devolucion.getIdAlquiler());
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -44,7 +43,6 @@ public class DevolucionDAO {
                 devolucion.setFechaDevolucion(rs.getString("fecha_devolucion"));
                 devolucion.setObservaciones(rs.getString("observaciones"));
                 devolucion.setCostosDano(rs.getDouble("costos_daño"));
-                devolucion.setTotalAdicional(rs.getDouble("total_adicional"));
                 devolucion.setIdAlquiler(rs.getInt("id_alquiler"));
 
                 devoluciones.add(devolucion);
@@ -73,7 +71,6 @@ public class DevolucionDAO {
                     devolucion.setFechaDevolucion(rs.getString("fecha_devolucion"));
                     devolucion.setObservaciones(rs.getString("observaciones"));
                     devolucion.setCostosDano(rs.getDouble("costos_daño"));
-                    devolucion.setTotalAdicional(rs.getDouble("total_adicional"));
                     devolucion.setIdAlquiler(rs.getInt("id_alquiler"));
                 }
             }
@@ -86,7 +83,7 @@ public class DevolucionDAO {
 
     // Actualizar una devolución
     public boolean updateDevolucion(Devolucion devolucion) {
-        String query = "UPDATE Devolucion SET fecha_devolucion = ?, observaciones = ?, costos_daño = ?, total_adicional = ?, id_alquiler = ? WHERE id_devolucion = ?";
+        String query = "UPDATE Devolucion SET fecha_devolucion = ?, observaciones = ?, costos_daño = ?, id_alquiler = ? WHERE id_devolucion = ?";
 
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -94,9 +91,8 @@ public class DevolucionDAO {
             ps.setString(1, devolucion.getFechaDevolucion());
             ps.setString(2, devolucion.getObservaciones());
             ps.setDouble(3, devolucion.getCostosDano());
-            ps.setDouble(4, devolucion.getTotalAdicional());
-            ps.setInt(5, devolucion.getIdAlquiler());
-            ps.setInt(6, devolucion.getIdDevolucion());
+            ps.setInt(4, devolucion.getIdAlquiler());
+            ps.setInt(5, devolucion.getIdDevolucion());
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {

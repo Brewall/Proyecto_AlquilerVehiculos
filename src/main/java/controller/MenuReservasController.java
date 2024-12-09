@@ -1,5 +1,7 @@
 package controller;
 
+import dao.ClienteDAO;
+import dao.PersonaDAO;
 import dao.VehiculoDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +14,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
+import model.Cliente;
+import model.Persona;
 import model.Vehiculo;
 
 import java.util.List;
@@ -20,12 +24,16 @@ import java.util.List;
 public class MenuReservasController {
 
     private VehiculoDAO vehiculoDAO = new VehiculoDAO();
+    private ClienteDAO clienteDAO = new ClienteDAO();
     @FXML
     private ComboBox<Vehiculo> comboBoxVehiculo;
+    @FXML
+    private ComboBox<Cliente> comboBoxCliente;
 
     @FXML
     public void initialize() {
         cargarVehiculos();
+        cargarPersonas();
     }
 
     private void cargarVehiculos() {
@@ -43,6 +51,19 @@ public class MenuReservasController {
         }
     }
 
+    private void cargarPersonas() {
+        try {
+            // Obtener las personas desde la base de datos
+            List<Cliente> clientes = clienteDAO.getAllClientes();
+            ObservableList<Cliente> personasObservable = FXCollections.observableArrayList(clientes);
+
+            // Asignar las personas al ComboBox
+            comboBoxCliente.setItems(personasObservable);
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudieron cargar las Personas", Alert.AlertType.ERROR);
+        }
+    }
 
     public void clickComboBoxCliente(ActionEvent actionEvent) {
     }

@@ -21,7 +21,7 @@ import model.TipoCliente;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class MenuMantenimientoClientesEmpresa {
+public class MenuMantenimientoClientesEmpresaController {
 
     //Dao
     private ClienteDAO clienteDAO = new ClienteDAO();

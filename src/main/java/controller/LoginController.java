@@ -22,7 +22,7 @@ public class LoginController {
     private PasswordField textFieldPasswordUsuario;
 
     private UsuarioDAO usuarioDAO;
-    // private Usuario usuario;
+
 
     public LoginController() {
         usuarioDAO = new UsuarioDAO(); // Inicializamos el DAO
@@ -69,9 +69,6 @@ public class LoginController {
         }
     }
 
-    /*public Usuario getUsuario() {
-        return usuario;
-    }*/
 
     private void mostrarAlerta(String titulo, String contenido, Alert.AlertType tipoAlerta) {
         Alert alerta = new Alert(tipoAlerta);

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DBConnection {
     private static final String URL = "jdbc:mysql://localhost:3306/dbrent_a_car";
     private static final String USER = "root";
-    private static final String PASSWORD = "root";
+    private static final String PASSWORD = "administrador";
 
     // Método para obtener una nueva conexión cada vez que se invoque
     public static Connection getConnection() throws SQLException {
