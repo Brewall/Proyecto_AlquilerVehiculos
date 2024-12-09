@@ -9,22 +9,34 @@ import java.util.List;
 public class EmpresaDAO {
 
     // Crear una nueva empresa
-    public boolean createEmpresa(Empresa empresa) {
+    public int createEmpresa(Empresa empresa) {
         String query = "INSERT INTO Empresa (razon_social, ruc, direccion) VALUES (?, ?, ?)";
+        int idGenerado = -1; // Valor por defecto si no se genera ID
 
         try (Connection connection = DBConnection.getConnection();
-             PreparedStatement ps = connection.prepareStatement(query)) {
+             PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, empresa.getRazonSocial());
             ps.setString(2, empresa.getRuc());
             ps.setString(3, empresa.getDireccion());
 
-            return ps.executeUpdate() > 0;
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        idGenerado = rs.getInt(1);
+                    }
+                }
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
+
+        return idGenerado;
     }
+
 
     // Obtener todas las empresas
     public List<Empresa> getAllEmpresas() {

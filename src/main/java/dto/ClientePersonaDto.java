@@ -1,6 +1,6 @@
 package dto;
 
-public class ClientePersona {
+public class ClientePersonaDto {
     private int idCliente;
     private int idPersona;
     private String nombres;
@@ -16,10 +16,10 @@ public class ClientePersona {
     // Constructor
 
 
-    public ClientePersona() {
+    public ClientePersonaDto() {
     }
 
-    public ClientePersona(int idCliente, int idPersona, String nombres, String apellidoPaterno, String apellidoMaterno, String dni, String direccion, String telefono, String correo, String genero, String fechaNacimiento) {
+    public ClientePersonaDto(int idCliente, int idPersona, String nombres, String apellidoPaterno, String apellidoMaterno, String dni, String direccion, String telefono, String correo, String genero, String fechaNacimiento) {
         this.idCliente = idCliente;
         this.idPersona = idPersona;
         this.nombres = nombres;

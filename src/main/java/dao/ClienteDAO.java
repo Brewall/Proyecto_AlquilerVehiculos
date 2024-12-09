@@ -1,6 +1,7 @@
 package dao;
 
-import dto.ClientePersona;
+import dto.ClienteEmpresaDto;
+import dto.ClientePersonaDto;
 import model.Cliente;
 import model.TipoCliente;
 import util.DBConnection;
@@ -145,8 +146,8 @@ public class ClienteDAO {
     }
 
     // Consultas personalizadas: obtener clientes tipo persona
-    public List<ClientePersona> obtenerClientesTipoPersona() {
-        List<ClientePersona> clientes = new ArrayList<>();
+    public List<ClientePersonaDto> obtenerClientesTipoPersona() {
+        List<ClientePersonaDto> clientes = new ArrayList<>();
         String sql = "SELECT c.id_cliente, c.id_persona, p.nombres, p.apellido_paterno, p.apellido_materno, p.dni, " +
                 "p.direccion, p.telefono, p.correo, p.genero, p.fecha_nacimiento " +
                 "FROM cliente c " +
@@ -160,7 +161,7 @@ public class ClienteDAO {
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    ClientePersona cliente = new ClientePersona(
+                    ClientePersonaDto cliente = new ClientePersonaDto(
                             rs.getInt("id_cliente"),
                             rs.getInt("id_persona"),
                             rs.getString("nombres"),
@@ -181,5 +182,39 @@ public class ClienteDAO {
             e.printStackTrace();
         }
         return clientes;
+    }
+
+
+    public List<ClienteEmpresaDto> obtenerClientesTipoEmpresa() {
+        List<ClienteEmpresaDto> lista = new ArrayList<>();
+
+        String sql = "SELECT c.id_cliente, c.id_empresa, e.razon_social, e.ruc, e.direccion\n" +
+                "            FROM cliente c\n" +
+                "            INNER JOIN empresa e ON c.id_empresa = e.id_empresa\n" +
+                "            WHERE c.id_tipoCliente = ?";
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, TipoCliente.EMPRESA.getIdTipoCliente());
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    ClienteEmpresaDto dto = new ClienteEmpresaDto();
+                    dto.setIdCliente(rs.getInt("id_cliente"));
+                    dto.setIdEmpresa(rs.getInt("id_empresa"));
+                    dto.setRazonSocial(rs.getString("razon_social"));
+                    dto.setRuc(rs.getString("ruc"));
+                    dto.setDireccion(rs.getString("direccion"));
+
+                    lista.add(dto);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lista;
     }
 }

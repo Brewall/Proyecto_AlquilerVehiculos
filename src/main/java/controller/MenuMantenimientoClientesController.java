@@ -2,7 +2,7 @@ package controller;
 
 import dao.ClienteDAO;
 import dao.PersonaDAO;
-import dto.ClientePersona;
+import dto.ClientePersonaDto;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,7 +28,7 @@ public class MenuMantenimientoClientesController {
     private PersonaDAO personaDAO = new PersonaDAO();
 
     //Objetos
-    private ClientePersona clienteSeleccionado;
+    private ClientePersonaDto clienteSeleccionado;
 
 
     //Controls Form
@@ -55,23 +55,23 @@ public class MenuMantenimientoClientesController {
 
 
     @FXML
-    private TableView<ClientePersona> listaClientesPersona;
+    private TableView<ClientePersonaDto> listaClientesPersona;
     @FXML
-    private TableColumn<ClientePersona, String> columnaNombres;
+    private TableColumn<ClientePersonaDto, String> columnaNombres;
     @FXML
-    private TableColumn<ClientePersona, String> columnaApellidoPaterno;
+    private TableColumn<ClientePersonaDto, String> columnaApellidoPaterno;
     @FXML
-    private TableColumn<ClientePersona, String> columnaApellidoMaterno;
+    private TableColumn<ClientePersonaDto, String> columnaApellidoMaterno;
     @FXML
-    private TableColumn<ClientePersona, String> columnaDireccion;
+    private TableColumn<ClientePersonaDto, String> columnaDireccion;
     @FXML
-    private TableColumn<ClientePersona, String> columnaTelefono;
+    private TableColumn<ClientePersonaDto, String> columnaTelefono;
     @FXML
-    private TableColumn<ClientePersona, String> columnaCorreo;
+    private TableColumn<ClientePersonaDto, String> columnaCorreo;
     @FXML
-    private TableColumn<ClientePersona, String> columnaGenero;
+    private TableColumn<ClientePersonaDto, String> columnaGenero;
     @FXML
-    private TableColumn<ClientePersona, String> columnaFechaNacimiento;
+    private TableColumn<ClientePersonaDto, String> columnaFechaNacimiento;
 
     @FXML
     public void initialize() {
@@ -89,7 +89,7 @@ public class MenuMantenimientoClientesController {
         });
     }
 
-    private void cargarFormulario(ClientePersona cliente) {
+    private void cargarFormulario(ClientePersonaDto cliente) {
         // Cargar los datos del cliente en el formulario
         textFieldNombreCliente.setText(cliente.getNombres());
         textFieldAppellidoCliente.setText(cliente.getApellidoPaterno());
@@ -109,8 +109,8 @@ public class MenuMantenimientoClientesController {
 
     private void cargarClientes() {
         try {
-            List<ClientePersona> listaClientePersona = clienteDAO.obtenerClientesTipoPersona();
-            ObservableList<ClientePersona> listaClientePersonaObservable = FXCollections.observableArrayList(listaClientePersona);
+            List<ClientePersonaDto> listaClientePersona = clienteDAO.obtenerClientesTipoPersona();
+            ObservableList<ClientePersonaDto> listaClientePersonaObservable = FXCollections.observableArrayList(listaClientePersona);
 
             columnaNombres.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombres()));
             columnaApellidoPaterno.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getApellidoPaterno()));
