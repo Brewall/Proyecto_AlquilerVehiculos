@@ -2,6 +2,7 @@ package controller;
 
 import dao.TipoVehiculoDAO;
 import dao.VehiculoDAO;
+import dto.ClientePersonaDto;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -24,10 +25,15 @@ import java.util.List;
 
 public class MenuMantenimientoVehiculosController {
 
+    //Dao
     private VehiculoDAO vehiculoDAO = new VehiculoDAO();
     private TipoVehiculoDAO tipoVehiculoDAO = new TipoVehiculoDAO(); // Para manejar las categorías
 
+    //Objetos
+    private Vehiculo vehiculoSeleccionado;
 
+
+    //Controles Form
     @FXML
     private TextField textFieldMarcaVehiculo;
     @FXML
@@ -63,8 +69,26 @@ public class MenuMantenimientoVehiculosController {
     public void initialize() {
         cargarCategorias();
         cargarVehiculos();
-        /*System.out.println("Ingresa a initialize y lo de abajo es tu lista vehiculos");
-        System.out.println(vehiculoDAO.getAllVehiculos());*/
+
+        // Evento de selección en la tabla
+        listaVehiculo.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) { // Verificamos si es una sola clic
+                vehiculoSeleccionado = listaVehiculo.getSelectionModel().getSelectedItem();
+                if (vehiculoSeleccionado != null) {
+                    cargarFormulario(vehiculoSeleccionado);
+                }
+            }
+        });
+    }
+
+    private void cargarFormulario(Vehiculo vehiculo) {
+        // Cargar los datos del vehiculo en el formulario
+        textFieldMarcaVehiculo.setText(vehiculo.getMarca());
+        textFieldModeloVehiculo.setText(vehiculo.getModelo());
+        textFieldAnioVehiculo.setText(vehiculo.getAnioVehiculo());
+        textFieldPlacaVehiculo.setText(vehiculo.getPlaca());
+        textFieldPrecioVehiculo.setText(Double.toString(vehiculo.getPrecioDia()));
+        comboBoxCategoriaVehiculo.setValue(tipoVehiculoDAO.getTipoVehiculoById(vehiculo.getIdTipoVehiculo()));
     }
 
     private void cargarVehiculos() {
@@ -80,7 +104,6 @@ public class MenuMantenimientoVehiculosController {
             columnaAnio.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAnioVehiculo()));
             columnaPlaca.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPlaca()));
             columnaPrecio.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPrecioDia()).asObject());
-            //columnaDisponibilidad.setCellValueFactory(cellData -> new SimpleBooleanProperty(cellData.getValue().isDisponible()).asObject());
 
             // Usar un cell factory para mostrar "Disponible" o "No disponible"
             columnaDisponibilidad.setCellValueFactory(cellData -> new SimpleBooleanProperty(cellData.getValue().isDisponible()).asObject());
@@ -94,6 +117,13 @@ public class MenuMantenimientoVehiculosController {
                         setText(disponible ? "Disponible" : "No disponible");
                     }
                 }
+            });
+
+            // Llenar la columna de categoría con el nombre del tipo de vehículo
+            columnaCategoria.setCellValueFactory(cellData -> {
+                int idTipoVehiculo = cellData.getValue().getIdTipoVehiculo();
+                TipoVehiculo tipoVehiculo = tipoVehiculoDAO.getTipoVehiculoById(idTipoVehiculo);
+                return new SimpleStringProperty(tipoVehiculo.getTipoVehiculo());
             });
 
             // Asignamos los datos al TableView
@@ -191,6 +221,85 @@ public class MenuMantenimientoVehiculosController {
         }*/
     }
 
+
+
+    public void clickButtomEditarVehiculoExistente(ActionEvent actionEvent) {
+        try {
+            System.out.println("entra al metodo");
+            // Validar datos ingresados
+            String marca = textFieldMarcaVehiculo.getText().trim();
+            String modelo = textFieldModeloVehiculo.getText().trim();
+            String anio = textFieldAnioVehiculo.getText().trim();
+            String placa = textFieldPlacaVehiculo.getText().trim();
+            String precioStr = textFieldPrecioVehiculo.getText().trim();
+            TipoVehiculo categoria = comboBoxCategoriaVehiculo.getValue();
+
+            if (marca.isEmpty() || modelo.isEmpty() || anio.isEmpty() || placa.isEmpty() || precioStr.isEmpty() || categoria == null) {
+                mostrarAlerta("Campos Vacíos", "Todos los campos deben estar llenos", Alert.AlertType.WARNING);
+                return;
+            }
+
+            // Validar que el precio sea un número válido
+            double precio;
+            try {
+                precio = Double.parseDouble(precioStr);
+                if (precio <= 0) {
+                    mostrarAlerta("Precio inválido", "El precio debe ser mayor a 0", Alert.AlertType.WARNING);
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                mostrarAlerta("Formato inválido", "El precio debe ser un número válido", Alert.AlertType.WARNING);
+                return;
+            }
+
+            //double precio = Double.parseDouble(precioStr);
+
+            // Crear un objeto Vehiculo
+            Vehiculo vehiculo = new Vehiculo();
+            vehiculo.setIdVehiculo(vehiculoSeleccionado.getIdVehiculo());
+            vehiculo.setMarca(marca);
+            vehiculo.setModelo(modelo);
+            vehiculo.setAnioVehiculo(anio);
+            vehiculo.setPlaca(placa);
+            vehiculo.setPrecioDia(precio);
+            vehiculo.setDisponible(true); // Asumimos que todos los vehículos nuevos están disponibles
+            vehiculo.setIdTipoVehiculo(categoria.getIdTipoVehiculo()); // Usamos el ID de la categoría
+
+            // System.out.println(vehiculo.toString());
+
+            // Guardar en la base de datos
+            boolean success = vehiculoDAO.updateVehiculo(vehiculo);
+            if (success) {
+                mostrarAlerta("Éxito", "Vehículo agregado correctamente", Alert.AlertType.INFORMATION);
+                cargarVehiculos(); // Refrescar la lista
+                limpiarCampos(); // Limpiar los campos de entrada
+            } else {
+                mostrarAlerta("Error", "No se pudo agregar el vehículo", Alert.AlertType.ERROR);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Error inesperado", "Ocurrió un error al intentar agregar el vehículo", Alert.AlertType.ERROR);
+        }
+    }
+
+    public void clickButtomEliminarVehiculoExistente(ActionEvent actionEvent){
+        try {
+            boolean deleteVehiculo = vehiculoDAO.deleteVehiculo(vehiculoSeleccionado.getIdVehiculo());
+
+            if(deleteVehiculo) {
+                mostrarAlerta("Éxito", "Vehículo Eliminado correctamente", Alert.AlertType.INFORMATION);
+                cargarVehiculos(); // Refrescar la lista
+                limpiarCampos(); // Limpiar los campos de entrada
+            } else {
+                mostrarAlerta("Error", "No se pudo eliminar el vehículo", Alert.AlertType.ERROR);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }
+
+
     @FXML
     public void clickButtomRegresarMenuPrincipal(ActionEvent actionEvent) {
         try {
@@ -225,24 +334,5 @@ public class MenuMantenimientoVehiculosController {
         alerta.setTitle(titulo);
         alerta.setContentText(contenido);
         alerta.showAndWait();
-    }
-
-    public void clickButtomEditarVehiculoExistente(ActionEvent actionEvent) {
-        try {
-            // Cargamos la vista del menú principal
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/editarVehiculoExistente.fxml"));
-            Parent root = loader.load();
-
-            // Creamos la nueva escena
-            Scene scene = new Scene(root);
-
-            // Obtenemos el Stage actual y lo cambiamos
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-            mostrarAlerta("Error", "No se pudo cargar el menú anterior", Alert.AlertType.ERROR);
-        }
     }
 }
