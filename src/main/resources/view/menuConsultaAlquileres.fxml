@@ -47,12 +47,13 @@
                   <Insets bottom="10.0" left="5.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <Label text="Resultados de la Busqueda">
+            <Button fx:id="buttomGenerarReporteAlquiler" mnemonicParsing="false" onAction="#clickButtomGenerarReporteAlquiler" style="-fx-background-color: red;" text="Generar reporte" textFill="WHITE" translateX="65.0" translateY="-35.0" />
+            <Label text="Resultados de la Busqueda" translateY="-30.0">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TableView prefHeight="200.0" prefWidth="200.0">
+            <TableView prefHeight="200.0" prefWidth="200.0" translateY="-30.0">
               <columns>
                 <TableColumn editable="false" prefWidth="75.0" text="Cliente" />
                 <TableColumn prefWidth="75.0" text="Vehiculo" />

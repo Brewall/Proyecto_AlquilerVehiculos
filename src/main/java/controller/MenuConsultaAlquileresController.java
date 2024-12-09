@@ -45,4 +45,7 @@ public class MenuConsultaAlquileresController {
         alerta.setContentText(contenido);
         alerta.showAndWait();
     }
+
+    public void clickButtomGenerarReporteAlquiler(ActionEvent actionEvent) {
+    }
 }

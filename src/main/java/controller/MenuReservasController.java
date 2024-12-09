@@ -3,6 +3,7 @@ package controller;
 import dao.ClienteDAO;
 import dao.PersonaDAO;
 import dao.VehiculoDAO;
+import dto.ClienteInfoDto;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,7 +30,7 @@ public class MenuReservasController {
     @FXML
     private ComboBox<Vehiculo> comboBoxVehiculo;
     @FXML
-    private ComboBox<Cliente> comboBoxCliente;
+    private ComboBox<ClienteInfoDto> comboBoxCliente;
 
     @FXML
     public void initialize() {
@@ -55,8 +56,8 @@ public class MenuReservasController {
     private void cargarPersonas() {
         try {
             // Obtener las personas desde la base de datos
-            List<Cliente> clientes = clienteDAO.getAllClientes();
-            ObservableList<Cliente> personasObservable = FXCollections.observableArrayList(clientes);
+            List<ClienteInfoDto> clientes = clienteDAO.getClienteInfo();
+            ObservableList<ClienteInfoDto> personasObservable = FXCollections.observableArrayList(clientes);
 
             // Asignar las personas al ComboBox
             comboBoxCliente.setItems(personasObservable);
