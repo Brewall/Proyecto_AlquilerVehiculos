@@ -2,105 +2,111 @@ package dao;
 
 import model.Empresa;
 import util.DBConnection;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EmpresaDAO {
-    private Connection connection;
-    private PreparedStatement ps;
 
-    public EmpresaDAO(){
-        this.connection = DBConnection.getConnection();
-    }
+    // Crear una nueva empresa
+    public boolean createEmpresa(Empresa empresa) {
+        String query = "INSERT INTO Empresa (razon_social, ruc, direccion) VALUES (?, ?, ?)";
 
-    // Crea una nueva empresa
-    public boolean createEmpresa(Empresa empresa){
-        String query = "INSERT INTO Empresa(razon_social, ruc, direccion) VALUES (?,?,?)";
-        try {
-            ps = connection.prepareStatement(query);
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+
             ps.setString(1, empresa.getRazonSocial());
             ps.setString(2, empresa.getRuc());
             ps.setString(3, empresa.getDireccion());
 
-            return ps.execute();
-        }catch (SQLException e){
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
 
-    // Obtener todos las empresas
-    public List<Empresa> getAllEmpresas(){
+    // Obtener todas las empresas
+    public List<Empresa> getAllEmpresas() {
         List<Empresa> empresas = new ArrayList<>();
-        String query ="SELECT * FROM Empresa";
-        try {
-            ResultSet rs = ps.executeQuery(query);
-            while (rs.next()){
+        String query = "SELECT * FROM Empresa";
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
                 Empresa empresa = new Empresa();
                 empresa.setIdEmpresa(rs.getInt("id_empresa"));
                 empresa.setRazonSocial(rs.getString("razon_social"));
                 empresa.setRuc(rs.getString("ruc"));
                 empresa.setDireccion(rs.getString("direccion"));
+                empresas.add(empresa);
             }
-        }catch (SQLException e){
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return empresas;
     }
 
-    // Obtiene una empresa por su ID
-    public Empresa getEmpresaById(int idEmpresa){
+    // Obtener una empresa por su ID
+    public Empresa getEmpresaById(int idEmpresa) {
         Empresa empresa = null;
         String query = "SELECT * FROM Empresa WHERE id_empresa = ?";
 
-        try {
-            ps = connection.prepareStatement(query);
-            ps.setInt(1,idEmpresa);
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
 
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()){
-                empresa = new Empresa();
-                empresa.setIdEmpresa(rs.getInt("id_empresa"));
-                empresa.setRazonSocial(rs.getString("razon_social"));
-                empresa.setRuc(rs.getString("ruc"));
-                empresa.setDireccion(rs.getString("direccion"));
+            ps.setInt(1, idEmpresa);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    empresa = new Empresa();
+                    empresa.setIdEmpresa(rs.getInt("id_empresa"));
+                    empresa.setRazonSocial(rs.getString("razon_social"));
+                    empresa.setRuc(rs.getString("ruc"));
+                    empresa.setDireccion(rs.getString("direccion"));
+                }
             }
-        }catch (SQLException e){
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return empresa;
     }
 
     // Actualizar una empresa
-    public boolean updateEmpresa(Empresa empresa){
-        String query = "UPDATE Empresa SET razon_social = ?, ruc = ?, direccion = ?";
+    public boolean updateEmpresa(Empresa empresa) {
+        String query = "UPDATE Empresa SET razon_social = ?, ruc = ?, direccion = ? WHERE id_empresa = ?";
 
-        try {
-            ps = connection.prepareStatement(query);
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+
             ps.setString(1, empresa.getRazonSocial());
             ps.setString(2, empresa.getRuc());
             ps.setString(3, empresa.getDireccion());
+            ps.setInt(4, empresa.getIdEmpresa());
 
-            return ps.execute();
-        }catch (SQLException e){
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
 
     // Eliminar una empresa
-    public boolean deleteEmpresa(int idEmpresa){
+    public boolean deleteEmpresa(int idEmpresa) {
         String query = "DELETE FROM Empresa WHERE id_empresa = ?";
 
-        try {
-            ps = connection.prepareStatement(query);
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+
             ps.setInt(1, idEmpresa);
-            return ps.execute();
-        }catch (SQLException e){
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }

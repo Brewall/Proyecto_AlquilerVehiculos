@@ -4,7 +4,15 @@ public class TipoCliente {
     private int idTipoCliente;
     private String tipoCliente;
 
+    public static final TipoCliente PERSONA = new TipoCliente(1,"Persona");
+    public static final TipoCliente EMPRESA = new TipoCliente(2,"Empresa");
+
     public TipoCliente() {
+    }
+
+    public TipoCliente(int idTipoCliente, String tipoCliente) {
+        this.idTipoCliente = idTipoCliente;
+        this.tipoCliente = tipoCliente;
     }
 
     public int getIdTipoCliente() {

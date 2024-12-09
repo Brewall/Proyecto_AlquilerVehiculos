@@ -1,6 +1,7 @@
-package model;
+package dto;
 
-public class Persona {
+public class ClientePersona {
+    private int idCliente;
     private int idPersona;
     private String nombres;
     private String apellidoPaterno;
@@ -12,7 +13,32 @@ public class Persona {
     private String genero;
     private String fechaNacimiento;
 
-    public Persona() {
+    // Constructor
+
+
+    public ClientePersona() {
+    }
+
+    public ClientePersona(int idCliente, int idPersona, String nombres, String apellidoPaterno, String apellidoMaterno, String dni, String direccion, String telefono, String correo, String genero, String fechaNacimiento) {
+        this.idCliente = idCliente;
+        this.idPersona = idPersona;
+        this.nombres = nombres;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.dni = dni;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.genero = genero;
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
 
     public int getIdPersona() {
@@ -93,21 +119,5 @@ public class Persona {
 
     public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
-    }
-
-    @Override
-    public String toString() {
-        return "Persona{" +
-                "idPersona=" + idPersona +
-                ", nombres='" + nombres + '\'' +
-                ", apellidoPaterno='" + apellidoPaterno + '\'' +
-                ", apellidoMaterno='" + apellidoMaterno + '\'' +
-                ", dni='" + dni + '\'' +
-                ", direccion='" + direccion + '\'' +
-                ", telefono='" + telefono + '\'' +
-                ", correo='" + correo + '\'' +
-                ", genero='" + genero + '\'' +
-                ", fechaNacimiento='" + fechaNacimiento + '\'' +
-                '}';
     }
 }
