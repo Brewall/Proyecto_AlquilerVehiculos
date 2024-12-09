@@ -1,10 +1,10 @@
 package controller;
 
-import dao.ClienteDAO;
-import dao.PersonaDAO;
-import dao.VehiculoDAO;
+import dao.*;
 import dto.ClienteInfoDto;
+import dto.EmpleadosInfoDto;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,12 +13,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
-import model.Cliente;
-import model.Persona;
-import model.Vehiculo;
+import model.*;
 
 import java.util.List;
 
@@ -27,15 +24,137 @@ public class MenuReservasController {
 
     private VehiculoDAO vehiculoDAO = new VehiculoDAO();
     private ClienteDAO clienteDAO = new ClienteDAO();
+    private EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+    private AlquilerDAO alquilerDAO = new AlquilerDAO();
+    private PersonaDAO personaDAO = new PersonaDAO();
+    private EmpresaDAO empresaDAO = new EmpresaDAO();
+
+
+    //Controladores form
     @FXML
     private ComboBox<Vehiculo> comboBoxVehiculo;
     @FXML
     private ComboBox<ClienteInfoDto> comboBoxCliente;
+    @FXML
+    private ComboBox<EmpleadosInfoDto> comboBoxEmpleadoReserva;
+    @FXML
+    private DatePicker datePickerFechaInicio;
+    @FXML
+    private DatePicker datePickerFechaFin;
+    //Tabla view
+    @FXML
+    private TableView<Alquiler> listaAlquilerReservas;
+    @FXML
+    private TableColumn<Alquiler, String> columnaCliente;
+    @FXML
+    private TableColumn<Alquiler, String> columnaVehiculo;
+    @FXML
+    private TableColumn<Alquiler, String> columnaEmpleado;
+    @FXML
+    private TableColumn<Alquiler, String> columnaFInicio;
+    @FXML
+    private TableColumn<Alquiler, String> columnaHoraInicio;
+    @FXML
+    private TableColumn<Alquiler, String> columnaFFin;
+    @FXML
+    private TableColumn<Alquiler, String> columnaHoraFin;
+
 
     @FXML
     public void initialize() {
         cargarVehiculos();
-        cargarPersonas();
+        cargarClientes();
+        cargarEmpleados();
+        cargarTablaReservas();
+    }
+
+    public void clickButtomCrearReserva(ActionEvent actionEvent) {
+        try {
+            Alquiler nuveoAlquiler = new Alquiler();
+            nuveoAlquiler.setIdCliente(comboBoxCliente.getValue().getIdCliente());
+            nuveoAlquiler.setIdVehiculo(comboBoxVehiculo.getValue().getIdVehiculo());
+            nuveoAlquiler.setIdUsuario(comboBoxEmpleadoReserva.getValue().getIdUsuario());
+            nuveoAlquiler.setFechaInicioReserva(datePickerFechaInicio.getValue().toString());
+            nuveoAlquiler.setFechaFinReserva(datePickerFechaFin.getValue().toString());
+            nuveoAlquiler.setTotalPrecio(comboBoxVehiculo.getValue().getPrecioDia());
+
+            boolean registroAlquiler = alquilerDAO.createAlquiler(nuveoAlquiler);
+
+            if(registroAlquiler){
+                mostrarAlerta("Éxito", "ALquiler agregado correctamente", Alert.AlertType.INFORMATION);
+                cargarVehiculos(); // Refrescar la lista
+                //limpiarCampos(); // Limpiar los campos de entrada
+            } else {
+                mostrarAlerta("Error", "No se pudo registrar el alquiler", Alert.AlertType.ERROR);
+            }
+
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            cargarTablaReservas();
+        }
+    }
+
+
+    public void cargarTablaReservas() {
+        //data  de la tabla reserva
+        List<Alquiler> alquilerReserva = alquilerDAO.getAllAlquileres();
+        ObservableList<Alquiler> alquilerReservaObservable = FXCollections.observableArrayList(alquilerReserva);
+        System.out.println("Vehículos: " + alquilerReserva);
+
+        //col cliente
+        columnaCliente.setCellValueFactory(cellData -> {
+            String dataCol = "";
+            int idCliente = cellData.getValue().getIdCliente();
+            Cliente cliente = clienteDAO.getClienteById(idCliente);
+            if (cliente.getIdTipoCliente() == TipoCliente.PERSONA.getIdTipoCliente()) {
+                Persona persona = personaDAO.getPersonaById(cliente.getIdPersona());
+                dataCol = persona.getDni() + " " + persona.getNombres();
+            } else if (cliente.getIdTipoCliente() == TipoCliente.EMPRESA.getIdTipoCliente()) {
+                Empresa empresa = empresaDAO.getEmpresaById(cliente.getIdEmpresa());
+                dataCol = empresa.getRuc() + " " + empresa.getRazonSocial();
+            }
+
+            return new SimpleStringProperty(dataCol);
+        });
+
+        // col vehiculo
+        columnaVehiculo.setCellValueFactory(cellData -> {
+            String dataCol = "";
+            int idVehiculo = cellData.getValue().getIdVehiculo();
+            Vehiculo vehiculo = vehiculoDAO.getVehiculosById(idVehiculo);
+            dataCol = vehiculo.getMarca() + "" + vehiculo.getModelo();
+            return new SimpleStringProperty(dataCol);
+        });
+        // col Empleado
+        /*columnaEmpleado.setCellValueFactory(cellData ->{
+            String dataCol = "";
+            int idEmpleado = cellData.getValue().getIdCliente();
+            Empleado empleado = empleadoDAO.getEmpleadoById(idEmpleado);
+        });*/
+        // col FechaInicio
+
+        // col HoraInicio
+
+        // col Fecha Fin
+
+        // col Hora Inicio
+
+        listaAlquilerReservas.setItems(alquilerReservaObservable);
+    }
+
+    private void cargarEmpleados() {
+        try {
+            // Obtener los Clientes desde la base de datos
+            List<EmpleadosInfoDto> empleados = empleadoDAO.getEmpleadoInfo();
+            ObservableList<EmpleadosInfoDto> empleadosObservable = FXCollections.observableArrayList(empleados);
+
+            // Asignar los Clientes al ComboBox
+            comboBoxEmpleadoReserva.setItems(empleadosObservable);
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudieron cargar los Clientes", Alert.AlertType.ERROR);
+        }
     }
 
     private void cargarVehiculos() {
@@ -53,25 +172,30 @@ public class MenuReservasController {
         }
     }
 
-    private void cargarPersonas() {
+    private void cargarClientes() {
         try {
-            // Obtener las personas desde la base de datos
+            // Obtener los Clientes desde la base de datos
             List<ClienteInfoDto> clientes = clienteDAO.getClienteInfo();
             ObservableList<ClienteInfoDto> personasObservable = FXCollections.observableArrayList(clientes);
 
-            // Asignar las personas al ComboBox
+            // Asignar los Clientes al ComboBox
             comboBoxCliente.setItems(personasObservable);
         } catch (Exception e) {
             e.printStackTrace();
-            mostrarAlerta("Error", "No se pudieron cargar las Personas", Alert.AlertType.ERROR);
+            mostrarAlerta("Error", "No se pudieron cargar los Clientes", Alert.AlertType.ERROR);
         }
     }
 
     public void clickComboBoxCliente(ActionEvent actionEvent) {
+        if (comboBoxCliente.getItems().isEmpty()) { // Solo carga si está vacío
+            cargarClientes();
+        }
     }
 
     public void clickComboBoxVehiculo(ActionEvent actionEvent) {
-
+        if (comboBoxVehiculo.getItems().isEmpty()) { // Solo carga si está vacío
+            cargarVehiculos();
+        }
     }
 
     public void datePickerFechaInicio(ActionEvent actionEvent) {
@@ -82,8 +206,6 @@ public class MenuReservasController {
 
 
 
-    public void clickButtomCrearReserva(ActionEvent actionEvent) {
-    }
 
     public void clickEditarReservaExistente(ActionEvent actionEvent) {
         try {
@@ -128,6 +250,7 @@ public class MenuReservasController {
             mostrarAlerta("Error", "No se pudo cargar el menú principal", Alert.AlertType.ERROR);
         }
     }
+
     private void mostrarAlerta(String titulo, String contenido, Alert.AlertType tipoAlerta) {
         Alert alerta = new Alert(tipoAlerta);
         alerta.setTitle(titulo);
@@ -136,5 +259,9 @@ public class MenuReservasController {
     }
 
     public void clickComboBoxEmpleadoReserva(ActionEvent actionEvent) {
+        if (comboBoxEmpleadoReserva.getItems().isEmpty()) { // Solo carga si está vacío
+            cargarEmpleados();
+        }
     }
+
 }

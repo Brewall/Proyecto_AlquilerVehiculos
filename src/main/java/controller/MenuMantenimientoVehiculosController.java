@@ -207,18 +207,6 @@ public class MenuMantenimientoVehiculosController {
             mostrarAlerta("Error inesperado", "Ocurrió un error al intentar agregar el vehículo", Alert.AlertType.ERROR);
         }
 
-            /*if (vehiculoDAO.createVehiculo(vehiculo)) {
-                mostrarAlerta("Éxito", "Vehículo agregado correctamente", Alert.AlertType.INFORMATION);
-                limpiarCampos();
-            } else {
-                mostrarAlerta("Error", "No se pudo agregar el vehículo", Alert.AlertType.ERROR);
-            }
-        } catch (NumberFormatException e) {
-            mostrarAlerta("Formato Incorrecto", "El precio debe ser un número válido", Alert.AlertType.ERROR);
-        } catch (Exception e) {
-            e.printStackTrace();
-            mostrarAlerta("Error", "Ocurrió un error inesperado", Alert.AlertType.ERROR);
-        }*/
     }
 
 

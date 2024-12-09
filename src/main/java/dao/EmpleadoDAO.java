@@ -1,5 +1,6 @@
 package dao;
 
+import dto.EmpleadosInfoDto;
 import model.Empleado;
 import util.DBConnection;
 
@@ -112,4 +113,47 @@ public class EmpleadoDAO {
             return false;
         }
     }
+
+    public List<EmpleadosInfoDto> getEmpleadoInfo() {
+        List<EmpleadosInfoDto> empleadosInfoDtoList = new ArrayList<>();
+        String sql = """
+                SELECT
+                    em.id_empleado,
+                    CASE
+                        WHEN r.id_rol = 1 THEN CONCAT('Rol: ', r.rol_empleado, ' - DNI: ', p.dni, ' - Nombre: ', p.nombres)
+                        WHEN r.id_rol = 2 THEN CONCAT('Rol: ', r.rol_empleado, ' - DNI: ', p.dni, ' - Nombre: ', p.nombres)
+                    ELSE '-'
+                    END AS empleado_info,
+                    u.id_usuario
+                FROM
+                                    empleado em
+                                INNER JOIN
+                                    persona p ON em.id_persona = p.id_persona
+                                INNER JOIN
+                                    rol r ON em.id_rol = r.id_rol
+                				INNER JOIN\s
+                					usuario u ON em.id_empleado = u.id_empleado
+                """;
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    EmpleadosInfoDto dto = new EmpleadosInfoDto(
+                            rs.getInt("id_empleado"),
+                            rs.getString("empleado_info"),
+                            rs.getInt("id_usuario")
+                    );
+                    empleadosInfoDtoList.add(dto);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return empleadosInfoDtoList;
+    }
+
 }

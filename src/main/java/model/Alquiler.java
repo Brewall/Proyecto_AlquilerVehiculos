@@ -5,6 +5,8 @@ public class Alquiler {
     private int idCliente;
     private int idVehiculo;
     private int idUsuario;
+    private String fechaInicioReserva;
+    private String fechaFinReserva;
     private int idMovimientoVehiculo;
     private double totalPrecio;
 
@@ -59,4 +61,33 @@ public class Alquiler {
         this.totalPrecio = totalPrecio;
     }
 
+    public String getFechaInicioReserva() {
+        return fechaInicioReserva;
+    }
+
+    public void setFechaInicioReserva(String fechaInicioReserva) {
+        this.fechaInicioReserva = fechaInicioReserva;
+    }
+
+    public String getFechaFinReserva() {
+        return fechaFinReserva;
+    }
+
+    public void setFechaFinReserva(String fechaFinReserva) {
+        this.fechaFinReserva = fechaFinReserva;
+    }
+
+    @Override
+    public String toString() {
+        return "Alquiler{" +
+                "idAlquiler=" + idAlquiler +
+                ", idCliente=" + idCliente +
+                ", idVehiculo=" + idVehiculo +
+                ", idUsuario=" + idUsuario +
+                ", fechaInicioReserva='" + fechaInicioReserva + '\'' +
+                ", fechaFinReserva='" + fechaFinReserva + '\'' +
+                ", idMovimientoVehiculo=" + idMovimientoVehiculo +
+                ", totalPrecio=" + totalPrecio +
+                '}';
+    }
 }

@@ -54,6 +54,6 @@ public class ClienteInfoDto {
     // Método toString() para depuración
     @Override
     public String toString() {
-        return idCliente + " " + tipoCliente + " " + clienteInfo;
+        return "Cliente: " + idCliente + " Tipo: " + tipoCliente + " " + clienteInfo;
     }
 }

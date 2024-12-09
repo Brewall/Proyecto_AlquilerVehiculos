@@ -228,8 +228,8 @@ public class ClienteDAO {
                     c.id_tipoCliente,
                     tp.tipo_cliente,
                     CASE
-                        WHEN c.id_tipoCliente = 1 THEN CONCAT(p.dni, '-', p.nombres)
-                        WHEN c.id_tipoCliente = 2 THEN CONCAT(e.ruc, '-', e.razon_social)
+                        WHEN c.id_tipoCliente = 1 THEN CONCAT(' DNI: ', p.dni, ' Nombre: ', p.nombres)
+                        WHEN c.id_tipoCliente = 2 THEN CONCAT(' RUC: ', e.ruc, ' Nombre: ', e.razon_social)
                         ELSE '-'
                     END AS cliente_info
                 FROM
