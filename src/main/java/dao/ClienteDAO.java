@@ -1,6 +1,7 @@
 package dao;
 
 import dto.ClienteEmpresaDto;
+import dto.ClienteInfoDto;
 import dto.ClientePersonaDto;
 import model.Cliente;
 import model.TipoCliente;
@@ -216,5 +217,50 @@ public class ClienteDAO {
         }
 
         return lista;
+    }
+
+
+    public List<ClienteInfoDto> getClienteInfo() {
+        List<ClienteInfoDto> clienteInfoList = new ArrayList<>();
+        String sql = """
+                SELECT
+                    c.id_cliente,
+                    c.id_tipoCliente,
+                    tp.tipo_cliente,
+                    CASE
+                        WHEN c.id_tipoCliente = 1 THEN CONCAT(p.dni, '-', p.nombres)
+                        WHEN c.id_tipoCliente = 2 THEN CONCAT(e.ruc, '-', e.razon_social)
+                        ELSE '-'
+                    END AS cliente_info
+                FROM
+                    cliente c
+                INNER JOIN
+                    tipocliente tp ON c.id_tipoCliente = tp.id_tipoCliente
+                LEFT JOIN
+                    persona p ON c.id_persona = p.id_persona
+                LEFT JOIN
+                    empresa e ON c.id_empresa = e.id_empresa
+                """;
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    ClienteInfoDto dto = new ClienteInfoDto(
+                            rs.getInt("id_cliente"),
+                            rs.getInt("id_tipoCliente"),
+                            rs.getString("tipo_cliente"),
+                            rs.getString("cliente_info")
+                    );
+                    clienteInfoList.add(dto);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return clienteInfoList;
     }
 }
