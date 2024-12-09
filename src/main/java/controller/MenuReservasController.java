@@ -122,14 +122,6 @@ public class MenuReservasController {
             // Obtener el controlador de la nueva escena (MenuPrincipalController)
             MenuPrincipalController controladorMenuPrincipal = loader.getController();
 
-            // Asegúrate de llamar al método para comprobar los roles
-            Platform.runLater(() -> {
-                if (controladorMenuPrincipal != null) {
-                    controladorMenuPrincipal.comprobarRolUsuario();  // Llamar a comprobarRolUsuario en el hilo de la UI
-                } else {
-                    System.out.println("Controlador no encontrado");
-                }
-            });
         } catch (Exception e) {
             e.printStackTrace();
             mostrarAlerta("Error", "No se pudo cargar el menú principal", Alert.AlertType.ERROR);

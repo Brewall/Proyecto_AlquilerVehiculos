@@ -152,7 +152,7 @@ public class UsuarioDAO {
         return null;
     }
 
-    /*// Validar usuario y contraseña
+    // Validar usuario y contraseña
     public Usuario validarUsuario(String nombreUsuario, String contrasenaUsuario) {
         Usuario usuario = null;
         String query = "SELECT * FROM Usuario WHERE nombre_usuario = ? AND contraseña_usuario = ?";
@@ -178,5 +178,5 @@ public class UsuarioDAO {
             e.printStackTrace();
         }
         return usuario;
-    }*/
+    }
 }

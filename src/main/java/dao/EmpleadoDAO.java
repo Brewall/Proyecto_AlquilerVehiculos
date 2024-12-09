@@ -53,6 +53,7 @@ public class EmpleadoDAO {
 
     // Obtener un empleado por su ID
     public Empleado getEmpleadoById(int idEmpleado) {
+        System.out.println(idEmpleado);
         Empleado empleado = null;
         String query = "SELECT * FROM Empleado WHERE id_empleado = ?";
 

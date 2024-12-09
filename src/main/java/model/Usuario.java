@@ -49,4 +49,15 @@ public class Usuario {
     public void setIdEmpleado(int idEmpleado) {
         this.idEmpleado = idEmpleado;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "idUsuario=" + idUsuario +
+                ", nombreUsuario='" + nombreUsuario + '\'' +
+                ", contrasenaUsuario='" + contrasenaUsuario + '\'' +
+                ", fechaCreacion='" + fechaCreacion + '\'' +
+                ", idEmpleado=" + idEmpleado +
+                '}';
+    }
 }

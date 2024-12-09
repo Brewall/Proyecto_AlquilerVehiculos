@@ -7,58 +7,43 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import model.Usuario;
+import util.UserSession;
 
 public class MenuPrincipalController {
 
     @FXML
-    private Button buttomAccederReservas;
+    private VBox idmodvehiculos;
+
     @FXML
-    private Button buttomAccederDevoluciones;
-    @FXML
-    private Button buttomAccederMantenimientoVehiculo;
-    @FXML
-    private Button buttomAccederMantenimientoClientes;
-    @FXML
-    private Button buttomAccederConsultaAlquiler;
+    private VBox idmodclientes;
 
     private Usuario usuario;
 
-
-    // Este método permitirá que se pase el usuario al controlador
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-        // Opcional: Realizar otras acciones con el usuario, como personalizar la interfaz
+    @FXML
+    public void initialize() {
         comprobarRolUsuario();
     }
 
-    // Método que puede comprobar el rol del usuario y habilitar/deshabilitar botones
+    // Método para establecer el usuario y comprobar el rol
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+        comprobarRolUsuario();
+    }
+
+    // Método para comprobar el rol del usuario y ocultar módulos si no es Administrador
     public void comprobarRolUsuario() {
-        if (usuario != null) {
-            if (usuario.getNombreUsuario().equals("Oficinista")) {
-                // Deshabilitar botones para 'Mantenimiento Vehículo' y 'Mantenimiento Clientes'
-                buttomAccederMantenimientoVehiculo.setDisable(true);
-                buttomAccederMantenimientoClientes.setDisable(true);
-
-                // Añadir manejadores de evento para los botones deshabilitados
-                buttomAccederMantenimientoVehiculo.setOnMouseClicked(event -> {
-                    if (buttomAccederMantenimientoVehiculo.isDisable()) {
-                        mostrarAlerta("Acceso Restringido", "Tu rol no permite acceder a estas opciones", Alert.AlertType.INFORMATION);
-                    }
-                });
-
-                buttomAccederMantenimientoClientes.setOnMouseClicked(event -> {
-                    if (buttomAccederMantenimientoClientes.isDisable()) {
-                        mostrarAlerta("Acceso Restringido", "Tu rol no permite acceder a estas opciones", Alert.AlertType.INFORMATION);
-                    }
-                });
-
-            }
+        if (UserSession.getRol() != null && UserSession.getRol().getIdRol() != 1) {
+            // Ocultar los módulos de Mantenimiento de Vehículos y Clientes
+            idmodvehiculos.setVisible(false);
+            idmodclientes.setVisible(false);
         }
     }
-    
+
+
     @FXML
     public void clickButtomAccederReservas(ActionEvent actionEvent) {
         try {
@@ -138,7 +123,6 @@ public class MenuPrincipalController {
             mostrarAlerta("Error", "No se pudo cargar el menú de mantenimiento de clientes", Alert.AlertType.ERROR);
         }
     }
-
 
 
     public void clickButtomAccederConsultaAlquiler(ActionEvent actionEvent) {

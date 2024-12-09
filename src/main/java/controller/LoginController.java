@@ -1,5 +1,7 @@
 package controller;
 
+import dao.EmpleadoDAO;
+import dao.RolDAO;
 import javafx.event.ActionEvent;
 import dao.UsuarioDAO;
 import javafx.fxml.FXML;
@@ -11,22 +13,29 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Empleado;
+import model.Rol;
 import model.Usuario;
+import util.UserSession;
 
 
 public class LoginController {
+    //Dao
+    private UsuarioDAO usuarioDAO = new UsuarioDAO();
+    private EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+    private RolDAO rolDAO = new RolDAO();
+
+
     @FXML
     private TextField textFieldUsuario;
 
     @FXML
     private PasswordField textFieldPasswordUsuario;
 
-    private UsuarioDAO usuarioDAO;
 
 
-    public LoginController() {
-        usuarioDAO = new UsuarioDAO(); // Inicializamos el DAO
-    }
+
+
 
     @FXML
     public void clickButtomAccederUsuario(ActionEvent actionEvent) {
@@ -38,9 +47,18 @@ public class LoginController {
             return;
         }
 
-        Usuario usuario = usuarioDAO.validarUsuarioConRol(nombreUsuario, contrasenaUsuario);
+        Usuario usuario = usuarioDAO.validarUsuario(nombreUsuario, contrasenaUsuario);
+        System.out.println(usuario);
 
         if (usuario != null) {
+
+            //Buscar Empleado
+            Empleado empleado = empleadoDAO.getEmpleadoById(usuario.getIdEmpleado());
+            //Buscar Rol
+            Rol rol = rolDAO.getRolById(empleado.getIdRol());
+            // Iniciar la sesión del usuario
+            UserSession.startSession(usuario,empleado,rol);
+
             mostrarAlerta("Bienvenido", "Inicio de sesión exitoso, bienvenido " + usuario.getNombreUsuario(), Alert.AlertType.INFORMATION);
             // Aquí redirigimos al menú principal
             try {
@@ -50,8 +68,7 @@ public class LoginController {
 
                 // Pasar el objeto Usuario al controlador del menú principal (si es necesario)
                 MenuPrincipalController menuController = loader.getController();
-                //menuController.equals(usuario);
-                menuController.setUsuario(usuario);  // Establecer el usuario en el controlador del menú
+
 
                 // Creamos la nueva escena
                 Scene scene = new Scene(root);
