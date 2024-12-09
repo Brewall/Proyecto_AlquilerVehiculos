@@ -1,5 +1,8 @@
 package controller;
 
+import dao.VehiculoDAO;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,28 +10,54 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
+import model.Vehiculo;
 
+import java.util.List;
 
 
 public class MenuReservasController {
+
+    private VehiculoDAO vehiculoDAO = new VehiculoDAO();
+    @FXML
+    private ComboBox<Vehiculo> comboBoxVehiculo;
+
+    @FXML
+    public void initialize() {
+        cargarVehiculos();
+    }
+
+    private void cargarVehiculos() {
+        try {
+            // Obtener los vehículos desde la base de datos
+            List<Vehiculo> vehiculos = vehiculoDAO.getAllVehiculos();
+            ObservableList<Vehiculo> vehiculosObservable = FXCollections.observableArrayList(vehiculos);
+
+            // Asignar los vehículos al ComboBox
+            comboBoxVehiculo.setItems(vehiculosObservable);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudieron cargar los vehículos", Alert.AlertType.ERROR);
+        }
+    }
+
+
     public void clickComboBoxCliente(ActionEvent actionEvent) {
     }
 
     public void clickComboBoxVehiculo(ActionEvent actionEvent) {
+
     }
 
     public void datePickerFechaInicio(ActionEvent actionEvent) {
     }
 
-    public void textHoraInicio(ActionEvent actionEvent) {
-    }
-
     public void clickDatePickerFechaDevolucion(ActionEvent actionEvent) {
     }
 
-    public void textHoraDevolucion(ActionEvent actionEvent) {
-    }
+
 
     public void clickButtomCrearReserva(ActionEvent actionEvent) {
     }

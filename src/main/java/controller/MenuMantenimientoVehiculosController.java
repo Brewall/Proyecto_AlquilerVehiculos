@@ -136,7 +136,20 @@ public class MenuMantenimientoVehiculosController {
                 return;
             }
 
-            double precio = Double.parseDouble(precioStr);
+            // Validar que el precio sea un número válido
+            double precio;
+            try {
+                precio = Double.parseDouble(precioStr);
+                if (precio <= 0) {
+                    mostrarAlerta("Precio inválido", "El precio debe ser mayor a 0", Alert.AlertType.WARNING);
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                mostrarAlerta("Formato inválido", "El precio debe ser un número válido", Alert.AlertType.WARNING);
+                return;
+            }
+
+            //double precio = Double.parseDouble(precioStr);
 
             // Crear un objeto Vehiculo
             Vehiculo vehiculo = new Vehiculo();
@@ -148,10 +161,23 @@ public class MenuMantenimientoVehiculosController {
             vehiculo.setDisponible(true); // Asumimos que todos los vehículos nuevos están disponibles
             vehiculo.setIdTipoVehiculo(categoria.getIdTipoVehiculo()); // Usamos el ID de la categoría
 
-            System.out.println(vehiculo.toString());
+            // System.out.println(vehiculo.toString());
 
             // Guardar en la base de datos
-            if (vehiculoDAO.createVehiculo(vehiculo)) {
+            boolean success = vehiculoDAO.createVehiculo(vehiculo);
+            if (success) {
+                mostrarAlerta("Éxito", "Vehículo agregado correctamente", Alert.AlertType.INFORMATION);
+                cargarVehiculos(); // Refrescar la lista
+                limpiarCampos(); // Limpiar los campos de entrada
+            } else {
+                mostrarAlerta("Error", "No se pudo agregar el vehículo", Alert.AlertType.ERROR);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Error inesperado", "Ocurrió un error al intentar agregar el vehículo", Alert.AlertType.ERROR);
+        }
+
+            /*if (vehiculoDAO.createVehiculo(vehiculo)) {
                 mostrarAlerta("Éxito", "Vehículo agregado correctamente", Alert.AlertType.INFORMATION);
                 limpiarCampos();
             } else {
@@ -162,7 +188,7 @@ public class MenuMantenimientoVehiculosController {
         } catch (Exception e) {
             e.printStackTrace();
             mostrarAlerta("Error", "Ocurrió un error inesperado", Alert.AlertType.ERROR);
-        }
+        }*/
     }
 
     @FXML
@@ -199,5 +225,24 @@ public class MenuMantenimientoVehiculosController {
         alerta.setTitle(titulo);
         alerta.setContentText(contenido);
         alerta.showAndWait();
+    }
+
+    public void clickButtomEditarVehiculoExistente(ActionEvent actionEvent) {
+        try {
+            // Cargamos la vista del menú principal
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/editarVehiculoExistente.fxml"));
+            Parent root = loader.load();
+
+            // Creamos la nueva escena
+            Scene scene = new Scene(root);
+
+            // Obtenemos el Stage actual y lo cambiamos
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo cargar el menú anterior", Alert.AlertType.ERROR);
+        }
     }
 }

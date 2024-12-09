@@ -22,6 +22,7 @@ public class LoginController {
     private PasswordField textFieldPasswordUsuario;
 
     private UsuarioDAO usuarioDAO;
+    // private Usuario usuario;
 
     public LoginController() {
         usuarioDAO = new UsuarioDAO(); // Inicializamos el DAO
@@ -37,7 +38,7 @@ public class LoginController {
             return;
         }
 
-        Usuario usuario = usuarioDAO.validarUsuario(nombreUsuario, contrasenaUsuario);
+        Usuario usuario = usuarioDAO.validarUsuarioConRol(nombreUsuario, contrasenaUsuario);
 
         if (usuario != null) {
             mostrarAlerta("Bienvenido", "Inicio de sesión exitoso, bienvenido " + usuario.getNombreUsuario(), Alert.AlertType.INFORMATION);
@@ -46,6 +47,11 @@ public class LoginController {
                 // Cargamos la vista del menú principal
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/menuPrincipal.fxml"));
                 Parent root = loader.load();
+
+                // Pasar el objeto Usuario al controlador del menú principal (si es necesario)
+                MenuPrincipalController menuController = loader.getController();
+                //menuController.equals(usuario);
+                menuController.setUsuario(usuario);  // Establecer el usuario en el controlador del menú
 
                 // Creamos la nueva escena
                 Scene scene = new Scene(root);
@@ -62,6 +68,10 @@ public class LoginController {
             mostrarAlerta("Error", "Usuario o contraseña incorrectos", Alert.AlertType.ERROR);
         }
     }
+
+    /*public Usuario getUsuario() {
+        return usuario;
+    }*/
 
     private void mostrarAlerta(String titulo, String contenido, Alert.AlertType tipoAlerta) {
         Alert alerta = new Alert(tipoAlerta);

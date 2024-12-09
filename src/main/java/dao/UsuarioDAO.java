@@ -104,6 +104,38 @@ public class UsuarioDAO {
         }
     }
 
+    public Usuario validarUsuarioConRol(String nombreUsuario, String contrasenaUsuario) {
+        String sql = """
+        SELECT u.id_usuario, u.nombre_usuario, r.rol_empleado 
+        FROM Usuario u
+        INNER JOIN Empleado e ON u.id_empleado = e.id_empleado
+        INNER JOIN Rol r ON e.id_rol = r.id_rol
+        WHERE u.nombre_usuario = ? AND u.contraseña_usuario = ?;
+    """;
+
+        try (Connection conn = DBConnection.getConnection(); // Usamos la conexión centralizada
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, nombreUsuario);
+            ps.setString(2, contrasenaUsuario);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Usuario usuario = new Usuario();
+                usuario.setIdUsuario(rs.getInt("id_usuario"));
+                usuario.setNombreUsuario(rs.getString("nombre_usuario"));
+                usuario.setNombreUsuario(rs.getString("rol_empleado"));
+                return usuario;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
     // Validar usuario y contraseña
     public Usuario validarUsuario(String nombreUsuario, String contrasenaUsuario) {
         Usuario usuario = null;

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditarVehiculoExistenteController">
+   <children>
+      <VBox layoutX="200.0" layoutY="21.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <children>
+            <Label text="Editar Vehiculo Existente">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label text="Seleccionar vehiculo a editar">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="comboBoxVehiculoExistente" onAction="#clickComboBoxVehiculoExistente" prefHeight="25.0" prefWidth="561.0" />
+            <Label text="Marca" />
+            <TextField fx:id="textFieldMarca" />
+            <Label text="Modelo" />
+            <TextField fx:id="textFieldModelo" />
+            <Label text="Año" />
+            <TextField fx:id="textFieldAnio" />
+            <Label text="Placa" />
+            <TextField fx:id="textFieldPlaca" />
+            <Label text="Precio" />
+            <TextField fx:id="textFieldPrecio" />
+            <Label text="Categoria" />
+            <ComboBox fx:id="comboBoxTipoVehiculo" onAction="#clickComboBoxTipoVehiculo" prefHeight="25.0" prefWidth="560.0" />
+
+            <!-- Aquí se agrega el CheckBox -->
+            <Label text="Disponible" />
+            <CheckBox fx:id="checkboxDisponible" text="Disponible" />
+
+            <Button fx:id="buttomGuardarCambiosVehiculo" mnemonicParsing="false" onAction="#clickButtomGuardarCambiosVehiculo" text="Guardar cambios" translateX="5.0">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="buttomEliminarVehiculo" mnemonicParsing="false" onAction="#clickButtomEliminarVehiculo" style="-fx-background-color: red;" text="Eliminar Vehiculo" textFill="WHITE" translateX="115.0" translateY="-25.0" />
+         </children>
+      </VBox>
+      <Button fx:id="buttomRegresarMenuPrincipal" alignment="TOP_LEFT" layoutX="14.0" layoutY="5.0" mnemonicParsing="false" onAction="#clickButtomRegresarMenuPrincipal" prefHeight="18.0" prefWidth="114.0" style="-fx-background-color: yellow;" text="Regresar al menu principal">
+         <font>
+            <Font name="System Bold" size="8.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

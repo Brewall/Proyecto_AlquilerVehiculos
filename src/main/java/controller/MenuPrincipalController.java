@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import model.Usuario;
 
 public class MenuPrincipalController {
 
@@ -23,6 +24,40 @@ public class MenuPrincipalController {
     @FXML
     private Button buttomAccederConsultaAlquiler;
 
+    private Usuario usuario;
+
+    // Este método permitirá que se pase el usuario al controlador
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+        // Opcional: Realizar otras acciones con el usuario, como personalizar la interfaz
+        comprobarRolUsuario();
+    }
+
+    // Método que puede comprobar el rol del usuario y habilitar/deshabilitar botones
+    private void comprobarRolUsuario() {
+        if (usuario != null) {
+            if (usuario.getNombreUsuario().equals("Oficinista")) {
+                // Deshabilitar botones para 'Mantenimiento Vehículo' y 'Mantenimiento Clientes'
+                buttomAccederMantenimientoVehiculo.setDisable(true);
+                buttomAccederMantenimientoClientes.setDisable(true);
+
+                // Añadir manejadores de evento para los botones deshabilitados
+                buttomAccederMantenimientoVehiculo.setOnMouseClicked(event -> {
+                    if (buttomAccederMantenimientoVehiculo.isDisable()) {
+                        mostrarAlerta("Acceso Restringido", "Tu rol no permite acceder a estas opciones", Alert.AlertType.INFORMATION);
+                    }
+                });
+
+                buttomAccederMantenimientoClientes.setOnMouseClicked(event -> {
+                    if (buttomAccederMantenimientoClientes.isDisable()) {
+                        mostrarAlerta("Acceso Restringido", "Tu rol no permite acceder a estas opciones", Alert.AlertType.INFORMATION);
+                    }
+                });
+
+            }
+        }
+    }
+    
     @FXML
     public void clickButtomAccederReservas(ActionEvent actionEvent) {
         try {

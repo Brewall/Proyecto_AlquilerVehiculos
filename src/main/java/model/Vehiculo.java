@@ -13,6 +13,17 @@ public class Vehiculo {
     public Vehiculo() {
     }
 
+    public Vehiculo(int idVehiculo, String marca, String modelo, String anioVehiculo, String placa, double precioDia, boolean disponible, int idTipoVehiculo) {
+        this.idVehiculo = idVehiculo;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.anioVehiculo = anioVehiculo;
+        this.placa = placa;
+        this.precioDia = precioDia;
+        this.disponible = disponible;
+        this.idTipoVehiculo = idTipoVehiculo;
+    }
+
     public int getIdVehiculo() {
         return idVehiculo;
     }
@@ -75,15 +86,8 @@ public class Vehiculo {
 
     @Override
     public String toString() {
-        return "Vehiculo{" +
-                "idVehiculo=" + idVehiculo +
-                ", marca='" + marca + '\'' +
-                ", modelo='" + modelo + '\'' +
-                ", anioVehiculo='" + anioVehiculo + '\'' +
-                ", placa='" + placa + '\'' +
-                ", precioDia=" + precioDia +
-                ", disponible=" + disponible +
-                ", idTipoVehiculo=" + idTipoVehiculo +
-                '}';
+        return "Vehiculo: " + idVehiculo +
+                " Marca: " + marca + ' ' +
+                " Modelo: " + modelo;
     }
 }

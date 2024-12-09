@@ -58,6 +58,7 @@
                   <Insets bottom="5.0" top="5.0" />
                </VBox.margin>
             </Button>
+            <Button fx:id="buttomEditarVehiculoExistente" mnemonicParsing="false" onAction="#clickButtomEditarVehiculoExistente" text="Editar un vehiculo existente" translateX="-70.0" translateY="-25.0" />
             <Label text="Lista de Vehiculo" translateX="-200.0">
                <font>
                   <Font name="System Bold" size="18.0" />
