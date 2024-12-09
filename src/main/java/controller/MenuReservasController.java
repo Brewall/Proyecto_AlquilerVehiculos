@@ -3,6 +3,7 @@ package controller;
 import dao.ClienteDAO;
 import dao.PersonaDAO;
 import dao.VehiculoDAO;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -117,6 +118,18 @@ public class MenuReservasController {
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
+
+            // Obtener el controlador de la nueva escena (MenuPrincipalController)
+            MenuPrincipalController controladorMenuPrincipal = loader.getController();
+
+            // Asegúrate de llamar al método para comprobar los roles
+            Platform.runLater(() -> {
+                if (controladorMenuPrincipal != null) {
+                    controladorMenuPrincipal.comprobarRolUsuario();  // Llamar a comprobarRolUsuario en el hilo de la UI
+                } else {
+                    System.out.println("Controlador no encontrado");
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
             mostrarAlerta("Error", "No se pudo cargar el menú principal", Alert.AlertType.ERROR);

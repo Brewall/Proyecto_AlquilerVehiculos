@@ -26,6 +26,7 @@ public class MenuPrincipalController {
 
     private Usuario usuario;
 
+
     // Este método permitirá que se pase el usuario al controlador
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
@@ -34,7 +35,7 @@ public class MenuPrincipalController {
     }
 
     // Método que puede comprobar el rol del usuario y habilitar/deshabilitar botones
-    private void comprobarRolUsuario() {
+    public void comprobarRolUsuario() {
         if (usuario != null) {
             if (usuario.getNombreUsuario().equals("Oficinista")) {
                 // Deshabilitar botones para 'Mantenimiento Vehículo' y 'Mantenimiento Clientes'
