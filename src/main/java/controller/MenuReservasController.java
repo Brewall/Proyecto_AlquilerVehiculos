@@ -123,21 +123,25 @@ public class MenuReservasController {
             String dataCol = "";
             int idVehiculo = cellData.getValue().getIdVehiculo();
             Vehiculo vehiculo = vehiculoDAO.getVehiculosById(idVehiculo);
-            dataCol = vehiculo.getMarca() + "" + vehiculo.getModelo();
+            dataCol = vehiculo.getMarca() + " " + vehiculo.getModelo();
             return new SimpleStringProperty(dataCol);
         });
         // col Empleado
-        /*columnaEmpleado.setCellValueFactory(cellData ->{
+        columnaEmpleado.setCellValueFactory(cellData ->{
             String dataCol = "";
-            int idEmpleado = cellData.getValue().getIdCliente();
+            int idEmpleado = cellData.getValue().getIdUsuario();
             Empleado empleado = empleadoDAO.getEmpleadoById(idEmpleado);
-        });*/
+            Persona persona = personaDAO.getPersonaById(empleado.getIdPersona());
+            dataCol = persona.getNombres() + " " + persona.getApellidoPaterno();
+            return new SimpleStringProperty(dataCol);
+        });
         // col FechaInicio
+        columnaFInicio.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaInicioReserva()));
 
         // col HoraInicio
 
         // col Fecha Fin
-
+        columnaFFin.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaFinReserva()));
         // col Hora Inicio
 
         listaAlquilerReservas.setItems(alquilerReservaObservable);
