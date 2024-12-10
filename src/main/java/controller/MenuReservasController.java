@@ -17,11 +17,14 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
 public class MenuReservasController {
 
+    //DAO
     private VehiculoDAO vehiculoDAO = new VehiculoDAO();
     private ClienteDAO clienteDAO = new ClienteDAO();
     private EmpleadoDAO empleadoDAO = new EmpleadoDAO();
@@ -29,6 +32,9 @@ public class MenuReservasController {
     private PersonaDAO personaDAO = new PersonaDAO();
     private EmpresaDAO empresaDAO = new EmpresaDAO();
 
+
+    //Objeto
+    private Alquiler alquilerSeleccionado;
 
     //Controladores form
     @FXML
@@ -66,19 +72,74 @@ public class MenuReservasController {
         cargarClientes();
         cargarEmpleados();
         cargarTablaReservas();
+
+        listaAlquilerReservas.setOnMouseClicked(mouseEvent ->
+        {
+            if (mouseEvent.getClickCount() == 1) {
+                alquilerSeleccionado = listaAlquilerReservas.getSelectionModel().getSelectedItem();
+                if (alquilerSeleccionado != null){
+                    cargarFormulario(alquilerSeleccionado);
+                }
+            }
+        });
     }
+
+
+    private void cargarFormulario(Alquiler alquilerSeleccionado) {
+        // Cargar los datos del alquiler en el formulario
+
+        comboBoxCliente.setValue(buscarClientePorId(alquilerSeleccionado.getIdCliente()));
+        comboBoxVehiculo.setValue(buscarVehicloPorId(alquilerSeleccionado.getIdVehiculo()));
+        comboBoxEmpleadoReserva.setValue(buscarEmpleadoPorId(alquilerSeleccionado.getIdUsuario()));
+
+        datePickerFechaInicio.setValue(LocalDate.parse(alquilerSeleccionado.getFechaInicioReserva().substring(0, 10)));
+        datePickerFechaFin.setValue(LocalDate.parse(alquilerSeleccionado.getFechaFinReserva().substring(0, 10)));
+
+
+    }
+
+    public ClienteInfoDto buscarClientePorId(int idCliente) {
+        ObservableList<ClienteInfoDto> clientes = comboBoxCliente.getItems(); // Obtener todos los elementos
+        for (ClienteInfoDto cliente : clientes) {
+            if (cliente.getIdCliente() == idCliente) {
+                return cliente; // Devuelve el cliente si coincide el ID
+            }
+        }
+        return null; // Devuelve null si no encuentra coincidencias
+    }
+
+    public Vehiculo buscarVehicloPorId(int idvehiculo) {
+        ObservableList<Vehiculo> vehiculos = comboBoxVehiculo.getItems(); // Obtener todos los elementos
+        for (Vehiculo vehiculo : vehiculos) {
+            if (vehiculo.getIdVehiculo() == idvehiculo) {
+                return vehiculo; // Devuelve el cliente si coincide el ID
+            }
+        }
+        return null; // Devuelve null si no encuentra coincidencias
+    }
+
+    public EmpleadosInfoDto buscarEmpleadoPorId(int idusuario) {
+        ObservableList<EmpleadosInfoDto> empleados = comboBoxEmpleadoReserva.getItems(); // Obtener todos los elementos
+        for (EmpleadosInfoDto empleado : empleados) {
+            if (empleado.getIdUsuario() == idusuario) {
+                return empleado; // Devuelve el cliente si coincide el ID
+            }
+        }
+        return null; // Devuelve null si no encuentra coincidencias
+    }
+
 
     public void clickButtomCrearReserva(ActionEvent actionEvent) {
         try {
-            Alquiler nuveoAlquiler = new Alquiler();
-            nuveoAlquiler.setIdCliente(comboBoxCliente.getValue().getIdCliente());
-            nuveoAlquiler.setIdVehiculo(comboBoxVehiculo.getValue().getIdVehiculo());
-            nuveoAlquiler.setIdUsuario(comboBoxEmpleadoReserva.getValue().getIdUsuario());
-            nuveoAlquiler.setFechaInicioReserva(datePickerFechaInicio.getValue().toString());
-            nuveoAlquiler.setFechaFinReserva(datePickerFechaFin.getValue().toString());
-            nuveoAlquiler.setTotalPrecio(comboBoxVehiculo.getValue().getPrecioDia());
+            Alquiler nuevoAlquiler = new Alquiler();
+            nuevoAlquiler.setIdCliente(comboBoxCliente.getValue().getIdCliente());
+            nuevoAlquiler.setIdVehiculo(comboBoxVehiculo.getValue().getIdVehiculo());
+            nuevoAlquiler.setIdUsuario(comboBoxEmpleadoReserva.getValue().getIdUsuario());
+            nuevoAlquiler.setFechaInicioReserva(datePickerFechaInicio.getValue().toString());
+            nuevoAlquiler.setFechaFinReserva(datePickerFechaFin.getValue().toString());
+            nuevoAlquiler.setTotalPrecio(comboBoxVehiculo.getValue().getPrecioDia());
 
-            boolean registroAlquiler = alquilerDAO.createAlquiler(nuveoAlquiler);
+            boolean registroAlquiler = alquilerDAO.createAlquiler(nuevoAlquiler);
 
             if(registroAlquiler){
                 mostrarAlerta("Éxito", "ALquiler agregado correctamente", Alert.AlertType.INFORMATION);
@@ -100,7 +161,6 @@ public class MenuReservasController {
         //data  de la tabla reserva
         List<Alquiler> alquilerReserva = alquilerDAO.getAllAlquileres();
         ObservableList<Alquiler> alquilerReservaObservable = FXCollections.observableArrayList(alquilerReserva);
-        System.out.println("Vehículos: " + alquilerReserva);
 
         //col cliente
         columnaCliente.setCellValueFactory(cellData -> {
@@ -136,13 +196,11 @@ public class MenuReservasController {
             return new SimpleStringProperty(dataCol);
         });
         // col FechaInicio
-        columnaFInicio.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaInicioReserva()));
-
-        // col HoraInicio
+        columnaFInicio.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaInicioReserva().substring(0, 10)));
 
         // col Fecha Fin
-        columnaFFin.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaFinReserva()));
-        // col Hora Inicio
+        columnaFFin.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaFinReserva().substring(0, 10)));
+
 
         listaAlquilerReservas.setItems(alquilerReservaObservable);
     }
@@ -202,34 +260,59 @@ public class MenuReservasController {
         }
     }
 
-    public void datePickerFechaInicio(ActionEvent actionEvent) {
-    }
-
-    public void clickDatePickerFechaDevolucion(ActionEvent actionEvent) {
-    }
-
-
-
-
     public void clickEditarReservaExistente(ActionEvent actionEvent) {
-        try {
-            // Cargamos la vista del menú principal
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/editarReservaExistente.fxml"));
-            Parent root = loader.load();
+        try{
+            System.out.println("entra al metodo editar reserva existente");
+        ClienteInfoDto cliente = comboBoxCliente.getValue();
+        Vehiculo vehiculo = comboBoxVehiculo.getValue();
+        EmpleadosInfoDto empleadosInfoDto = comboBoxEmpleadoReserva.getValue();
+        String fechaInicio = datePickerFechaInicio.getValue().toString();
+        String fechaFin = datePickerFechaFin.getValue().toString();
 
-            // Creamos la nueva escena
-            Scene scene = new Scene(root);
+        if (cliente == null || vehiculo == null || empleadosInfoDto == null || fechaInicio.isEmpty() || fechaFin.isEmpty()){
+            mostrarAlerta("Campos Vacíos", "Todos los campos deben estar llenos", Alert.AlertType.WARNING);
+            return;
+        }
 
-            // Obtenemos el Stage actual y lo cambiamos
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-            mostrarAlerta("Error", "No se pudo cargar el menú principal", Alert.AlertType.ERROR);
+        //crear una nueva reserv
+            Alquiler alquiler = new Alquiler();
+            alquiler.setIdAlquiler(alquilerSeleccionado.getIdAlquiler());
+            alquiler.setIdCliente(cliente.getIdCliente());
+            alquiler.setIdVehiculo(vehiculo.getIdVehiculo());
+            alquiler.setIdUsuario(empleadosInfoDto.getIdUsuario());
+            alquiler.setFechaInicioReserva(fechaInicio);
+            alquiler.setFechaFinReserva(fechaFin);
+            alquiler.setTotalPrecio(vehiculo.getPrecioDia());
+
+            boolean success = alquilerDAO.updateAlquiler(alquiler);
+            if (success) {
+                mostrarAlerta("Éxito", "Reserva creada correctamente", Alert.AlertType.INFORMATION);
+                cargarVehiculos(); // Refrescar la lista
+                limpiarCampos(); // Limpiar los campos de entrada
+            } else {
+                mostrarAlerta("Error", "No se pudo modificar la Reserva", Alert.AlertType.ERROR);
+            }
+        }catch (NumberFormatException e){
+            mostrarAlerta("Error inesperado", "Ocurrió un error al intentar crear Reserva", Alert.AlertType.ERROR);
+        } finally {
+            cargarTablaReservas();
         }
     }
 
+    public void clickButtomEliminarReserva(ActionEvent actionEvent) {
+        try {
+            boolean deleteReserva = alquilerDAO.deleteAlquiler(alquilerSeleccionado.getIdAlquiler());
+            if(deleteReserva) {
+                mostrarAlerta("Éxito", "Reserva Eliminada correctamente", Alert.AlertType.INFORMATION);
+                cargarTablaReservas(); // Refrescar la lista
+                limpiarCampos(); // Limpiar los campos de entrada
+            } else {
+                mostrarAlerta("Error", "No se pudo eliminar la Reserva", Alert.AlertType.ERROR);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     public void clickButtomRegresarMenuPrincipal(ActionEvent actionEvent) {
@@ -268,4 +351,9 @@ public class MenuReservasController {
         }
     }
 
+    private void limpiarCampos() {
+        comboBoxCliente.getSelectionModel().clearSelection();
+        comboBoxVehiculo.getSelectionModel().clearSelection();
+        comboBoxEmpleadoReserva.getSelectionModel().clearSelection();
+    }
 }

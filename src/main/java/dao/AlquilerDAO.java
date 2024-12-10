@@ -1,6 +1,9 @@
 package dao;
 
+import dto.AlquileresinfoDto;
+import dto.ClientePersonaDto;
 import model.Alquiler;
+import model.TipoCliente;
 import util.DBConnection;
 
 import java.sql.*;
@@ -97,7 +100,7 @@ public class AlquilerDAO {
 
     // Actualizar un alquiler
     public boolean updateAlquiler(Alquiler alquiler) {
-        String query = "UPDATE Alquiler SET id_cliente = ?, id_vehiculo = ?, id_usuario = ?, id_movimientoVehiculo = ?, total_precio = ? WHERE id_alquiler = ?";
+        String query = "UPDATE Alquiler SET id_cliente = ?, id_vehiculo = ?, id_usuario = ?,fecha_inicioReserva = ?, fecha_finReserva = ? , id_movimientoVehiculo = ?, total_precio = ? WHERE id_alquiler = ?";
 
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -105,9 +108,15 @@ public class AlquilerDAO {
             ps.setInt(1, alquiler.getIdCliente());
             ps.setInt(2, alquiler.getIdVehiculo());
             ps.setInt(3, alquiler.getIdUsuario());
-            ps.setInt(4, alquiler.getIdMovimientoVehiculo());
-            ps.setDouble(5, alquiler.getTotalPrecio());
-            ps.setInt(6, alquiler.getIdAlquiler());
+            ps.setString(4, alquiler.getFechaInicioReserva());
+            ps.setString(5, alquiler.getFechaFinReserva());
+            if(alquiler.getIdMovimientoVehiculo() == 0){
+                ps.setNull(6,Types.INTEGER);
+            }else {
+                ps.setInt(6, alquiler.getIdMovimientoVehiculo());
+            }
+            ps.setDouble(7, alquiler.getTotalPrecio());
+            ps.setInt(8, alquiler.getIdAlquiler());
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -129,5 +138,58 @@ public class AlquilerDAO {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public List<AlquileresinfoDto> obtenerAlquileres(){
+        List<AlquileresinfoDto> alquileresinfoDtos = new ArrayList<>();
+        String sql = "SELECT\n" +
+                "    a.id_alquiler,\n" +
+                "    CASE\n" +
+                "        WHEN c.id_persona IS NOT NULL THEN\n" +
+                "            CONCAT('Cliente: ', p.nombres, ' ', p.apellido_paterno, ' - DNI: ', p.dni)\n" +
+                "        WHEN c.id_empresa IS NOT NULL THEN\n" +
+                "            CONCAT('Empresa: ', e.razon_social, ' - RUC: ', e.ruc)\n" +
+                "        ELSE\n" +
+                "            'Cliente desconocido'\n" +
+                "    END AS cliente_info,\n" +
+                "    v.marca, v.modelo, v.placa,\n" +
+                "    a.fecha_inicioReserva,\n" +
+                "    a.fecha_finReserva,\n" +
+                "    a.total_precio\n" +
+                "FROM\n" +
+                "    Alquiler a\n" +
+                "INNER JOIN\n" +
+                "    Cliente c ON a.id_cliente = c.id_cliente\n" +
+                "LEFT JOIN\n" +
+                "    Persona p ON c.id_persona = p.id_persona\n" +
+                "LEFT JOIN\n" +
+                "    Empresa e ON c.id_empresa = e.id_empresa\n" +
+                "INNER JOIN\n" +
+                "    Vehiculo v ON a.id_vehiculo = v.id_vehiculo;";
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, TipoCliente.PERSONA.getIdTipoCliente());
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    AlquileresinfoDto dto = new AlquileresinfoDto(
+                            rs.getInt("id_alquiler"),
+                            rs.getString("cliente_info"),
+                            rs.getString("narca"),
+                            rs.getString("modelo"),
+                            rs.getString("placa"),
+                            rs.getString("fecha_inicioReserva"),
+                            rs.getString("fecha_finReserva"),
+                            rs.getDouble("total_precio")
+                    );
+                    alquileresinfoDtos.add(dto);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return alquileresinfoDtos;
     }
 }
