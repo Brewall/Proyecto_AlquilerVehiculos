@@ -1,73 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuConsultaAlquileresController">
-   <children>
-      <VBox layoutX="200.0" layoutY="75.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
-         <children>
-            <Label alignment="CENTER" text="Consulta de Alquileres">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-               <padding>
-                  <Insets top="8.0" />
-               </padding>
-            </Label>
-            <Label text="Cliente">
-               <VBox.margin>
-                  <Insets left="5.0" />
-               </VBox.margin>
-            </Label>
-            <ComboBox fx:id="comboBoxCliente" onAction="#clickComboBoxCliente" prefHeight="25.0" prefWidth="218.0" promptText="Seleccione al Cliente">
-               <VBox.margin>
-                  <Insets left="5.0" />
-               </VBox.margin>
-            </ComboBox>
-            <Label text="Vehiculo">
-               <VBox.margin>
-                  <Insets left="5.0" />
-               </VBox.margin>
-            </Label>
-            <ComboBox fx:id="comboBoxVehiculo" onAction="#clickComboBoxVehiculo" prefHeight="25.0" prefWidth="217.0" promptText="Seleccione el Vehiculo">
-               <VBox.margin>
-                  <Insets left="5.0" />
-               </VBox.margin>
-            </ComboBox>
-            <Button fx:id="buttomBuscarAlquiler" mnemonicParsing="false" onAction="#clickButtomBuscarAlquiler" style="-fx-background-color: black;" text="Buscar" textFill="WHITE">
-               <VBox.margin>
-                  <Insets bottom="10.0" left="5.0" top="10.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="buttomGenerarReporteAlquiler" mnemonicParsing="false" onAction="#clickButtomGenerarReporteAlquiler" style="-fx-background-color: red;" text="Generar reporte" textFill="WHITE" translateX="65.0" translateY="-35.0" />
-            <Label text="Resultados de la Busqueda" translateY="-30.0">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <TableView prefHeight="200.0" prefWidth="200.0" translateY="-30.0">
-              <columns>
-                <TableColumn editable="false" prefWidth="75.0" text="Cliente" />
-                <TableColumn prefWidth="75.0" text="Vehiculo" />
-                  <TableColumn prefWidth="99.0" text="Fecha de inicio" />
-                  <TableColumn prefWidth="82.0" text="Fecha de fin" />
-                  <TableColumn prefWidth="82.0" text="Estado" />
-              </columns>
-            </TableView>
-         </children>
-      </VBox>
-      <Button fx:id="buttomRegresarMenuPrincipal" alignment="TOP_LEFT" layoutX="20.0" layoutY="11.0" mnemonicParsing="false" onAction="#clickButtomRegresarMenuPrincipal" prefHeight="18.0" prefWidth="114.0" style="-fx-background-color: yellow;" text="Regresar al menu principal">
-         <font>
-            <Font name="System Bold" size="8.0" />
-         </font>
-      </Button>
-   </children>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuConsultaAlquileresController">
+    <children>
+        <VBox layoutX="200.0" layoutY="75.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="20.0"
+              AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <children>
+                <Label alignment="CENTER" text="Consulta de Alquileres">
+                    <font>
+                        <Font name="System Bold" size="24.0"/>
+                    </font>
+                    <padding>
+                        <Insets top="8.0"/>
+                    </padding>
+                </Label>
+                <Label text="Cliente">
+                    <VBox.margin>
+                        <Insets left="5.0"/>
+                    </VBox.margin>
+                </Label>
+                <ComboBox fx:id="comboBoxCliente" prefHeight="25.0" prefWidth="218.0"
+                          promptText="Seleccione al Cliente">
+                    <VBox.margin>
+                        <Insets left="5.0"/>
+                    </VBox.margin>
+                </ComboBox>
+                <Label text="Vehiculo">
+                    <VBox.margin>
+                        <Insets left="5.0"/>
+                    </VBox.margin>
+                </Label>
+                <ComboBox fx:id="comboBoxVehiculo" prefHeight="25.0" prefWidth="217.0"
+                          promptText="Seleccione el Vehiculo">
+                    <VBox.margin>
+                        <Insets left="5.0"/>
+                    </VBox.margin>
+                </ComboBox>
+                <Button fx:id="buttomProcesar" mnemonicParsing="false" onMouseClicked="#buttomProcesar"
+                        style="-fx-background-color: black;" text="Procesar" textFill="WHITE">
+                    <VBox.margin>
+                        <Insets bottom="10.0" left="5.0" top="10.0"/>
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="buttomGenerarReporteAlquiler" mnemonicParsing="false"
+                        onAction="#clickButtomExportarTXT" style="-fx-background-color: red;"
+                        text="Generar reporte" textFill="WHITE" translateX="74.0" translateY="-36.0"/>
+                <Button fx:id="buttomLimpiar" onMouseClicked="#buttomLimpiar" mnemonicParsing="false" text="Limpiar" translateX="183.0" translateY="-60.0"/>
+                <Label text="Resultados de la Busqueda" translateY="-30.0">
+                    <font>
+                        <Font name="System Bold" size="18.0"/>
+                    </font>
+                </Label>
+                <TableView fx:id="tablaReporteAlquiler" prefHeight="200.0" prefWidth="200.0" translateY="-30.0">
+                    <columns>
+                        <TableColumn fx:id="columnaIdReserva" editable="false" prefWidth="75.0" text="ID"/>
+                        <TableColumn fx:id="columnaCliente" editable="false" prefWidth="75.0" text="Cliente"/>
+                        <TableColumn fx:id="columnaTipoCliente" editable="false" prefWidth="75.0" text="Tipo"/>
+                        <TableColumn fx:id="columnaDoc" editable="false" prefWidth="75.0" text="RUC/DNI"/>
+                        <TableColumn fx:id="columnaMarca" prefWidth="75.0" text="Marca"/>
+                        <TableColumn fx:id="columnaModelo" prefWidth="75.0" text="Modelo"/>
+                        <TableColumn fx:id="columnaAño" prefWidth="75.0" text="Año"/>
+                        <TableColumn fx:id="columnaFechaInicio" prefWidth="99.0" text="Fecha de inicio"/>
+                        <TableColumn fx:id="columnaFechaFin" prefWidth="82.0" text="Fecha de fin"/>
+                        <TableColumn fx:id="columnaEstado" prefWidth="82.0" text="Estado"/>
+                    </columns>
+                </TableView>
+            </children>
+        </VBox>
+        <Button fx:id="buttomRegresarMenuPrincipal" alignment="TOP_LEFT" layoutX="20.0" layoutY="11.0"
+                mnemonicParsing="false" onAction="#clickButtomRegresarMenuPrincipal" prefHeight="18.0" prefWidth="114.0"
+                style="-fx-background-color: yellow;" text="Regresar al menu principal">
+            <font>
+                <Font name="System Bold" size="8.0"/>
+            </font>
+        </Button>
+    </children>
 </AnchorPane>

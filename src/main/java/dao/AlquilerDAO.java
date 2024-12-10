@@ -1,5 +1,6 @@
 package dao;
 
+import dto.AlquilerReporteDto;
 import dto.AlquileresinfoDto;
 import dto.ClientePersonaDto;
 import model.Alquiler;
@@ -26,9 +27,9 @@ public class AlquilerDAO {
             ps.setInt(3, alquiler.getIdUsuario());
             ps.setString(4, alquiler.getFechaInicioReserva());
             ps.setString(5, alquiler.getFechaFinReserva());
-            if(alquiler.getIdMovimientoVehiculo() == 0){
-                ps.setNull(6,Types.INTEGER);
-            }else {
+            if (alquiler.getIdMovimientoVehiculo() == 0) {
+                ps.setNull(6, Types.INTEGER);
+            } else {
                 ps.setInt(6, alquiler.getIdMovimientoVehiculo());
             }
 
@@ -110,9 +111,9 @@ public class AlquilerDAO {
             ps.setInt(3, alquiler.getIdUsuario());
             ps.setString(4, alquiler.getFechaInicioReserva());
             ps.setString(5, alquiler.getFechaFinReserva());
-            if(alquiler.getIdMovimientoVehiculo() == 0){
-                ps.setNull(6,Types.INTEGER);
-            }else {
+            if (alquiler.getIdMovimientoVehiculo() == 0) {
+                ps.setNull(6, Types.INTEGER);
+            } else {
                 ps.setInt(6, alquiler.getIdMovimientoVehiculo());
             }
             ps.setDouble(7, alquiler.getTotalPrecio());
@@ -140,7 +141,7 @@ public class AlquilerDAO {
         }
     }
 
-    public List<AlquileresinfoDto> obtenerAlquileres(){
+    public List<AlquileresinfoDto> obtenerAlquileresInfo() {
         List<AlquileresinfoDto> alquileresinfoDtos = new ArrayList<>();
         String sql = "SELECT\n" +
                 "    a.id_alquiler,\n" +
@@ -169,14 +170,12 @@ public class AlquilerDAO {
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, TipoCliente.PERSONA.getIdTipoCliente());
-
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     AlquileresinfoDto dto = new AlquileresinfoDto(
                             rs.getInt("id_alquiler"),
                             rs.getString("cliente_info"),
-                            rs.getString("narca"),
+                            rs.getString("marca"),
                             rs.getString("modelo"),
                             rs.getString("placa"),
                             rs.getString("fecha_inicioReserva"),
@@ -192,4 +191,125 @@ public class AlquilerDAO {
         }
         return alquileresinfoDtos;
     }
+
+    public List<AlquilerReporteDto> obtenerReporteAlquileres() {
+        List<AlquilerReporteDto> alquileres = new ArrayList<>();
+        String sql = "select a.id_alquiler,\n" +
+                "       a.id_cliente,\n" +
+                "       a.id_vehiculo,\n" +
+                "       CASE\n" +
+                "           WHEN c.id_tipoCliente = 1 THEN p.nombres\n" +
+                "           WHEN c.id_tipoCliente = 2 THEN e.razon_social\n" +
+                "           ELSE '-'\n" +
+                "       END AS nombre_cliente,\n" +
+                "\n" +
+                "       tp.tipo_cliente,\n" +
+                "       CASE\n" +
+                "           WHEN c.id_tipoCliente = 1 THEN p.dni\n" +
+                "           WHEN c.id_tipoCliente = 2 THEN e.ruc\n" +
+                "           ELSE '-'\n" +
+                "       END AS doc_cliente,\n" +
+                "        v.marca,\n" +
+                "        v.modelo,\n" +
+                "        v.anio_vehiculo,\n" +
+                "        CAST(a.fecha_inicioReserva as DATE ) as fecha_inicio,\n" +
+                "        CAST(a.fecha_finReserva as DATE )as fecha_fin\n" +
+                "from alquiler a\n" +
+                "         inner join cliente c on a.id_cliente = c.id_cliente\n" +
+                "         inner join vehiculo v on a.id_vehiculo = v.id_vehiculo\n" +
+                "         inner join tipocliente tp on c.id_tipoCliente = tp.id_tipoCliente\n" +
+                "         left join persona p on c.id_persona = p.id_persona\n" +
+                "         left join empresa e on c.id_empresa = e.id_empresa";
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                AlquilerReporteDto alquiler = new AlquilerReporteDto();
+                alquiler.setIdAlquiler(resultSet.getInt("id_alquiler"));
+                alquiler.setIdCliente(resultSet.getInt("id_cliente"));
+                alquiler.setIdVehiculo(resultSet.getInt("id_vehiculo"));
+                alquiler.setNombreCliente(resultSet.getString("nombre_cliente"));
+                alquiler.setTipoCliente(resultSet.getString("tipo_cliente"));
+                alquiler.setDocCliente(resultSet.getString("doc_cliente"));
+                alquiler.setMarca(resultSet.getString("marca"));
+                alquiler.setModelo(resultSet.getString("modelo"));
+                alquiler.setAnioVehiculo(resultSet.getInt("anio_vehiculo"));
+                alquiler.setFechaInicio(resultSet.getDate("fecha_inicio").toLocalDate());
+                alquiler.setFechaFin(resultSet.getDate("fecha_fin").toLocalDate());
+
+                alquileres.add(alquiler);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return alquileres;
+    }
+
+
+    public List<AlquilerReporteDto> obtenerReporteAlquileresFiltrado(Integer idCliente, Integer idVehiculo) {
+        List<AlquilerReporteDto> alquileres = new ArrayList<>();
+
+        // Consulta SQL con parámetros para filtrar por id_cliente o id_vehiculo
+        String sql = "SELECT a.id_alquiler, " +
+                "       a.id_cliente, " +
+                "       a.id_vehiculo, " +
+                "       CASE " +
+                "           WHEN c.id_tipoCliente = 1 THEN p.nombres " +
+                "           WHEN c.id_tipoCliente = 2 THEN e.razon_social " +
+                "           ELSE '-' " +
+                "       END AS nombre_cliente, " +
+                "       tp.tipo_cliente, " +
+                "       CASE " +
+                "           WHEN c.id_tipoCliente = 1 THEN p.dni " +
+                "           WHEN c.id_tipoCliente = 2 THEN e.ruc " +
+                "           ELSE '-' " +
+                "       END AS doc_cliente, " +
+                "       v.marca, " +
+                "       v.modelo, " +
+                "       v.anio_vehiculo, " +
+                "       CAST(a.fecha_inicioReserva AS DATE) AS fecha_inicio, " +
+                "       CAST(a.fecha_finReserva AS DATE) AS fecha_fin " +
+                "FROM alquiler a " +
+                "INNER JOIN cliente c ON a.id_cliente = c.id_cliente " +
+                "INNER JOIN vehiculo v ON a.id_vehiculo = v.id_vehiculo " +
+                "INNER JOIN tipocliente tp ON c.id_tipoCliente = tp.id_tipoCliente " +
+                "LEFT JOIN persona p ON c.id_persona = p.id_persona " +
+                "LEFT JOIN empresa e ON c.id_empresa = e.id_empresa " +
+                "WHERE (a.id_vehiculo = ? OR a.id_cliente = ?)";
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setObject(1, idVehiculo);
+            statement.setObject(2, idCliente);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    AlquilerReporteDto alquiler = new AlquilerReporteDto();
+                    alquiler.setIdAlquiler(resultSet.getInt("id_alquiler"));
+                    alquiler.setIdCliente(resultSet.getInt("id_cliente"));
+                    alquiler.setIdVehiculo(resultSet.getInt("id_vehiculo"));
+                    alquiler.setNombreCliente(resultSet.getString("nombre_cliente"));
+                    alquiler.setTipoCliente(resultSet.getString("tipo_cliente"));
+                    alquiler.setDocCliente(resultSet.getString("doc_cliente"));
+                    alquiler.setMarca(resultSet.getString("marca"));
+                    alquiler.setModelo(resultSet.getString("modelo"));
+                    alquiler.setAnioVehiculo(resultSet.getInt("anio_vehiculo"));
+                    alquiler.setFechaInicio(resultSet.getDate("fecha_inicio").toLocalDate());
+                    alquiler.setFechaFin(resultSet.getDate("fecha_fin").toLocalDate());
+
+                    alquileres.add(alquiler);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return alquileres;
+    }
+
 }

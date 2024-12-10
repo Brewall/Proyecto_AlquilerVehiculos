@@ -22,13 +22,13 @@
             <Label text="Fecha devuelta" translateX="-230.0" translateY="-40.0" />
             <DatePicker fx:id="datePickerFechaDevolucion" translateX="-185.0" translateY="-40.0" />
             <Label text="Costos Adicionales" translateX="-220.0" translateY="-40.0" />
-            <TextField fx:id="costosAdicionales" translateY="-40.0">
+            <TextField fx:id="textFieldcostosAdicionales" translateY="-40.0">
                <VBox.margin>
                   <Insets left="10.0" right="450.0" />
                </VBox.margin>
             </TextField>
             <Label text="Comentarios Adicionales" translateX="-207.0" translateY="-30.0" />
-            <TextArea fx:id="textComentariosAdicionales" prefHeight="42.0" prefWidth="536.0" translateY="-30.0">
+            <TextArea fx:id="textAreaComentariosAdicionales" prefHeight="42.0" prefWidth="536.0" translateY="-30.0">
                <opaqueInsets>
                   <Insets left="10.0" right="10.0" />
                </opaqueInsets>

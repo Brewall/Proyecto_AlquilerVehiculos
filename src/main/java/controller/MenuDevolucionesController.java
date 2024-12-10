@@ -11,27 +11,65 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.Devolucion;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MenuDevolucionesController {
 
-    @FXML
-    private ComboBox comboBoxReserva;
-
+    //Dao
+    private AlquilerDAO alquilerDAO = new AlquilerDAO();
     private DevolucionDAO devolucionDAO = new DevolucionDAO();
-    private AlquileresinfoDto alquileresinfoDto = new AlquileresinfoDto();
+
+
+    //Controles form
+    @FXML
+    private ComboBox<AlquileresinfoDto> comboBoxReserva;
+    @FXML
+    private DatePicker datePickerFechaDevolucion;
+    @FXML
+    private TextField textFieldcostosAdicionales;
+    @FXML
+    private TextArea textAreaComentariosAdicionales;
+
+    @FXML
+    public void initialize() {
+        cargarReservas();
+    }
+
+    public void cargarReservas() {
+        List<AlquileresinfoDto> alquileresinfoDtos = alquilerDAO.obtenerAlquileresInfo();
+        ObservableList<AlquileresinfoDto> alquileresinfoDtoObservable = FXCollections.observableArrayList(alquileresinfoDtos);
+        comboBoxReserva.setItems(alquileresinfoDtoObservable);
+    }
 
     public void clickComboBoxReserva(ActionEvent actionEvent) {
-        
+
     }
 
     public void clickRegistrarDevolucion(ActionEvent actionEvent) {
+        try {
+            Devolucion devolucion = new Devolucion();
 
+            devolucion.setIdAlquiler(comboBoxReserva.getValue().getIdAlquiler());
+            devolucion.setFechaDevolucion(datePickerFechaDevolucion.getValue().toString());
+            devolucion.setCostosDano(Double.parseDouble(textFieldcostosAdicionales.getText()));
+            devolucion.setObservaciones(textAreaComentariosAdicionales.getText());
+
+            boolean success = devolucionDAO.createDevolucion(devolucion);
+            if (success) {
+                mostrarAlerta("Éxito", "Devolucio Exitosa", Alert.AlertType.INFORMATION);
+            } else {
+                mostrarAlerta("Error", "No se pudo hacer la Devolucion", Alert.AlertType.ERROR);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            cargarReservas();
+            limpiarCampos();
+        }
     }
 
     @FXML
@@ -59,5 +97,13 @@ public class MenuDevolucionesController {
         alerta.setTitle(titulo);
         alerta.setContentText(contenido);
         alerta.showAndWait();
+    }
+
+    private void limpiarCampos() {
+        comboBoxReserva.getSelectionModel().clearSelection();
+        datePickerFechaDevolucion.setValue(null);
+        textFieldcostosAdicionales.clear();
+        textAreaComentariosAdicionales.clear();
+
     }
 }

@@ -153,6 +153,7 @@ public class MenuReservasController {
             e.printStackTrace();
         } finally {
             cargarTablaReservas();
+            limpiarCampos();
         }
     }
 
@@ -296,6 +297,7 @@ public class MenuReservasController {
             mostrarAlerta("Error inesperado", "Ocurrió un error al intentar crear Reserva", Alert.AlertType.ERROR);
         } finally {
             cargarTablaReservas();
+            limpiarCampos();
         }
     }
 
@@ -311,6 +313,9 @@ public class MenuReservasController {
             }
         } catch (Exception e){
             e.printStackTrace();
+        }finally {
+            cargarTablaReservas();
+            limpiarCampos();
         }
     }
 
