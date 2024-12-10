@@ -5,78 +5,76 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import com.sun.javafx.scene.control.DoubleField?>
-<AnchorPane prefHeight="513.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuMantenimientoVehiculosController">
-   <children>
-      <VBox alignment="CENTER" layoutX="263.0" layoutY="70.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
-         <children>
-            <Label text="Mantenimiento de Vehículos">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <Label text="Marca Vehiculo" translateX="-230.0" />
-            <TextField fx:id="textFieldMarcaVehiculo" prefHeight="54.0" prefWidth="560.0">
-               <padding>
-                  <Insets left="5.0" right="5.0" />
-               </padding>
-            </TextField>
-            <Label text="Modelo Vehiculo" translateX="-227.0" />
-            <TextField fx:id="textFieldModeloVehiculo">
-               <padding>
-                  <Insets left="5.0" right="5.0" />
-               </padding>
-            </TextField>
-            <Label text="Año del Vehiculo" translateX="-227.0" />
-            <TextField fx:id="textFieldAnioVehiculo">
-               <padding>
-                  <Insets left="5.0" right="5.0" />
-               </padding>
-            </TextField>
-            <Label text="Placa del Vehiculo" translateX="-225.0" />
-            <TextField fx:id="textFieldPlacaVehiculo">
-               <padding>
-                  <Insets left="5.0" right="5.0" />
-               </padding>
-            </TextField>
-            <Label text="Precio del Vehiculo" translateX="-222.0" />
-            <TextField fx:id="textFieldPrecioVehiculo" prefHeight="26.0" prefWidth="560.0">
-               <padding>
-                  <Insets left="5.0" right="5.0" />
-               </padding>
-            </TextField>
-            <Label text="Categoria del Vehiculo" translateX="-215.0" />
-            <ComboBox fx:id="comboBoxCategoriaVehiculo" onAction="#clickComboBoxCategoriaVehiculo" prefHeight="0.0" prefWidth="551.0" />
-            <Button fx:id="buttomAgregarVehiculo" mnemonicParsing="false" onAction="#clickButtomAgregarVehiculo" style="-fx-background-color: black;" text="Agregar Vehiculo" textFill="WHITE" translateX="-220.0" translateY="5.0">
-               <VBox.margin>
-                  <Insets bottom="5.0" top="5.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="buttomEditarVehiculoExistente" mnemonicParsing="false" onAction="#clickButtomEditarVehiculoExistente" text="Editar un vehiculo existente" translateX="-70.0" translateY="-25.0" />
-            <Button fx:id="buttomEliminarVehiculoExistente" mnemonicParsing="false" onAction="#clickButtomEliminarVehiculoExistente" style="-fx-background-color: #ef4040;" text="Eliminar" textFill="WHITE" translateX="50.0" translateY="-51.0" />
-            <Label text="Lista de Vehiculo" translateX="-200.0">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <TableView fx:id="listaVehiculo" prefHeight="200.0" prefWidth="200.0">
-              <columns>
-                <TableColumn fx:id="columnaMarca" prefWidth="75.0" text="Marca " />
-                  <TableColumn fx:id="columnaModelo" prefWidth="75.0" text="Modelo" />
-                <TableColumn fx:id="columnaAnio" prefWidth="75.0" text="Año " />
-                  <TableColumn fx:id="columnaPlaca" prefWidth="75.0" text="Placa" />
-                  <TableColumn fx:id="columnaPrecio" prefWidth="75.0" text="Precio" />
-                  <TableColumn fx:id="columnaDisponibilidad" prefWidth="101.0" text="Disponibilidad" />
-                  <TableColumn fx:id="columnaCategoria" prefWidth="77.0" text="Categoria" />
-              </columns>
-            </TableView>
-         </children>
-      </VBox>
-      <ScrollBar layoutX="586.0" layoutY="73.0" orientation="VERTICAL" prefHeight="161.0" prefWidth="14.0" />
-      <Button fx:id="buttomRegresarMenuPrincipal" alignment="TOP_LEFT" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#clickButtomRegresarMenuPrincipal" prefHeight="18.0" prefWidth="114.0" style="-fx-background-color: yellow;" text="Regresar al menu principal">
-         <font>
-            <Font name="System Bold" size="8.0" />
-         </font>
-      </Button>
-   </children>
+<AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuMantenimientoVehiculosController">
+    <children>
+        <VBox alignment="CENTER" layoutX="263.0" layoutY="70.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <children>
+                <Label text="Mantenimiento de Vehículos">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+                <Label text="Marca Vehiculo" translateX="-230.0" />
+                <TextField fx:id="textFieldMarcaVehiculo" prefHeight="54.0" prefWidth="560.0">
+                    <padding>
+                        <Insets left="5.0" right="5.0" />
+                    </padding>
+                </TextField>
+                <Label text="Modelo Vehiculo" translateX="-227.0" />
+                <TextField fx:id="textFieldModeloVehiculo">
+                    <padding>
+                        <Insets left="5.0" right="5.0" />
+                    </padding>
+                </TextField>
+                <Label text="Año del Vehiculo" translateX="-227.0" />
+                <TextField fx:id="textFieldAnioVehiculo">
+                    <padding>
+                        <Insets left="5.0" right="5.0" />
+                    </padding>
+                </TextField>
+                <Label text="Placa del Vehiculo" translateX="-225.0" />
+                <TextField fx:id="textFieldPlacaVehiculo">
+                    <padding>
+                        <Insets left="5.0" right="5.0" />
+                    </padding>
+                </TextField>
+                <Label text="Precio del Vehiculo" translateX="-222.0" />
+                <TextField fx:id="textFieldPrecioVehiculo" prefHeight="26.0" prefWidth="560.0">
+                    <padding>
+                        <Insets left="5.0" right="5.0" />
+                    </padding>
+                </TextField>
+                <Label text="Categoria del Vehiculo" translateX="-215.0" />
+                <ComboBox fx:id="comboBoxCategoriaVehiculo" onAction="#clickComboBoxCategoriaVehiculo" prefHeight="0.0" prefWidth="551.0" />
+                <Button fx:id="buttomAgregarVehiculo" mnemonicParsing="false" onAction="#clickButtomAgregarVehiculo" style="-fx-background-color: black;" text="Agregar Vehiculo" textFill="WHITE" translateX="-220.0" translateY="5.0">
+                    <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="buttomEditarVehiculoExistente" mnemonicParsing="false" onAction="#clickButtomEditarVehiculoExistente" text="Editar un vehiculo existente" translateX="-70.0" translateY="-25.0" />
+                <Button fx:id="buttomEliminarVehiculoExistente" mnemonicParsing="false" onAction="#clickButtomEliminarVehiculoExistente" style="-fx-background-color: #ef4040;" text="Eliminar" textFill="WHITE" translateX="50.0" translateY="-51.0" />
+                <Label text="Lista de Vehiculo" translateX="-200.0">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+                <TableView fx:id="listaVehiculo">
+                    <columns>
+                        <TableColumn fx:id="columnaMarca" prefWidth="75.0" text="Marca " />
+                        <TableColumn fx:id="columnaModelo" prefWidth="75.0" text="Modelo" />
+                        <TableColumn fx:id="columnaAnio" prefWidth="75.0" text="Año " />
+                        <TableColumn fx:id="columnaPlaca" prefWidth="75.0" text="Placa" />
+                        <TableColumn fx:id="columnaPrecio" prefWidth="75.0" text="Precio" />
+                        <TableColumn fx:id="columnaDisponibilidad" prefWidth="101.0" text="Disponibilidad" />
+                        <TableColumn fx:id="columnaCategoria" prefWidth="77.0" text="Categoria" />
+                    </columns>
+                </TableView>
+            </children>
+        </VBox>
+        <Button fx:id="buttomRegresarMenuPrincipal" alignment="TOP_LEFT" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#clickButtomRegresarMenuPrincipal" prefHeight="18.0" prefWidth="114.0" style="-fx-background-color: yellow;" text="Regresar al menu principal">
+            <font>
+                <Font name="System Bold" size="8.0" />
+            </font>
+        </Button>
+    </children>
 </AnchorPane>

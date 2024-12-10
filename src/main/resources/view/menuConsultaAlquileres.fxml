@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+<AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuConsultaAlquileresController">
     <children>
         <VBox layoutX="200.0" layoutY="75.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="20.0"
@@ -50,13 +50,14 @@
                 <Button fx:id="buttomGenerarReporteAlquiler" mnemonicParsing="false"
                         onAction="#clickButtomExportarTXT" style="-fx-background-color: red;"
                         text="Generar reporte" textFill="WHITE" translateX="74.0" translateY="-36.0"/>
-                <Button fx:id="buttomLimpiar" onMouseClicked="#buttomLimpiar" mnemonicParsing="false" text="Limpiar" translateX="183.0" translateY="-60.0"/>
+                <Button fx:id="buttomLimpiar" onMouseClicked="#buttomLimpiar" mnemonicParsing="false" text="Limpiar"
+                        translateX="183.0" translateY="-60.0"/>
                 <Label text="Resultados de la Busqueda" translateY="-30.0">
                     <font>
                         <Font name="System Bold" size="18.0"/>
                     </font>
                 </Label>
-                <TableView fx:id="tablaReporteAlquiler" prefHeight="200.0" prefWidth="200.0" translateY="-30.0">
+                <TableView fx:id="tablaReporteAlquiler">
                     <columns>
                         <TableColumn fx:id="columnaIdReserva" editable="false" prefWidth="75.0" text="ID"/>
                         <TableColumn fx:id="columnaCliente" editable="false" prefWidth="75.0" text="Cliente"/>
